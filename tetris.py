@@ -11,9 +11,11 @@ class Tetris:
         self.screen = self.screen_class.screen_game()
         self.screen_class.handle_state_data()
 
+        self.block_verticle = True
+
         self.blocks = Blocks(self.screen)
 
-        self.blocks.block_1()
+        # self.blocks.block_2(self.block_verticle)
 
         pygame.display.update()
 
@@ -26,8 +28,17 @@ class Tetris:
                     pygame.quit()
                     exit()
 
-            # for i in range(4):
-            #     self.blocks.red_block()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_KP5:
+                        if self.block_verticle:
+                            self.block_verticle = False
+
+                        else:
+                            self.block_verticle = True
+
+                        self.blocks.block_1(self.block_verticle)
+
+            # pygame.display.update()
 
 
 if __name__ == "__main__":
