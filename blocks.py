@@ -64,9 +64,9 @@ class Blocks:
             self.border_width,
         )
 
-    def _black_rect(self, num_cell):
-        x = 450
-        y = 500
+    def _black_rect(self, num_cell, y):
+        x = 0
+        # y = 500
 
         pygame.draw.rect(
             self.screen,
@@ -88,13 +88,13 @@ class Blocks:
             self._black_rect(4)
             while count < 5:
                 pygame.display.update()
-                self._square_item(red, light_line, dark_line, (x, y))
+                self._square_item(red, light_line, dark_line, (x + self.w_cell, y))
                 y += self.h_cell
 
                 count += 1
 
         else:
-            self._black_rect(4)
+            self._black_rect(5)
             while count < 5:
                 pygame.display.update()
 
@@ -103,20 +103,19 @@ class Blocks:
 
                 count += 1
 
-    def block_2(self, block_verticle):
+    def block_2(self, block_verticle, y):
         blue = (0, 0, 255)
         light_line = (255, 142, 142)
         dark_line = (119, 0, 0)
         count = 1
 
-        x = 450
-        y = 500
+        x = 170
+        # y = 10
 
         if block_verticle:
-            self._black_rect(3)
             while count < 5:
-                pygame.display.update()
                 if count == 1:
+
                     self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
                 if count == 2:
                     self._square_item(
@@ -124,15 +123,15 @@ class Blocks:
                     )
                 if count == 3:
                     self._square_item(blue, light_line, dark_line, (x + self.w_cell, y))
+
                 if count == 4:
                     self._square_item(
                         blue, light_line, dark_line, (x + self.w_cell * 2, y)
                     )
-
+                pygame.display.update()
                 count += 1
 
         else:
-            self._black_rect(3)
             while count < 5:
                 pygame.display.update()
                 if count == 1:
@@ -156,7 +155,8 @@ class Blocks:
 
                 count += 1
 
-    def block_3(self):
+    def block_3(self, block_verticle):
+        print(block_verticle)
         yellow = (255, 255, 0)
         light_line = (255, 237, 157)
         dark_line = (110, 96, 32)
@@ -165,20 +165,48 @@ class Blocks:
         x = 450
         y = 500
 
-        while count < 5:
-            if count != 4:
-                self._square_item(yellow, light_line, dark_line, (x, y))
+        if block_verticle:
+            self._black_rect(3)
+            while count < 5:
+                pygame.display.update()
+                if count != 4:
+                    self._square_item(yellow, light_line, dark_line, (x, y))
 
-                y += self.h_cell
+                    y += self.h_cell
 
-            else:
-                self._square_item(
-                    yellow, light_line, dark_line, (x + self.w_cell, y - self.h_cell)
-                )
+                else:
+                    self._square_item(
+                        yellow,
+                        light_line,
+                        dark_line,
+                        (x + self.w_cell, y - self.h_cell),
+                    )
 
-            count += 1
+                count += 1
 
-    def block_4(self):
+        else:
+            self._black_rect(3)
+            while count < 5:
+                pygame.display.update()
+                if count != 4:
+                    self._square_item(
+                        yellow, light_line, dark_line, (x, y + self.h_cell)
+                    )
+                    print(x)
+
+                    x += self.w_cell
+
+                else:
+                    self._square_item(
+                        yellow,
+                        light_line,
+                        dark_line,
+                        (x - self.w_cell, y),
+                    )
+
+                count += 1
+
+    def block_4(self, block_verticle):
         pink = (175, 0, 175)
         light_line = (255, 0, 255)
         dark_line = (95, 0, 95)
@@ -188,21 +216,36 @@ class Blocks:
         x = 450
         y = 500
 
-        while count < 5:
-            if count != 4:
-                self._square_item(pink, light_line, dark_line, (x, y))
+        if block_verticle:
+            self._black_rect(3)
+            while count < 5:
+                pygame.display.update()
+                if count != 4:
+                    self._square_item(pink, light_line, dark_line, (x + self.w_cell, y))
 
-                y += self.h_cell
+                    y += self.h_cell
 
-            else:
-                self._square_item(
-                    pink, light_line, dark_line, (x - self.w_cell, y - self.h_cell)
-                )
+                else:
+                    self._square_item(pink, light_line, dark_line, (x, y - self.h_cell))
 
-            count += 1
+                count += 1
+
+        else:
+            self._black_rect(3)
+            while count < 5:
+                pygame.display.update()
+                if count != 4:
+                    self._square_item(pink, light_line, dark_line, (x, y))
+                    x += self.w_cell
+                else:
+                    self._square_item(
+                        pink, light_line, dark_line, (x - self.w_cell, y + self.h_cell)
+                    )
+
+                count += 1
 
     # квадрат
-    def block_5(self):
+    def block_5(self, block_verticle):
         sea_wave = (53, 153, 252)
         light_line = (169, 212, 255)
         dark_line = (59, 86, 113)
@@ -211,47 +254,169 @@ class Blocks:
         x = 450
         y = 500
 
-        while count < 5:
-            if count == 1:
-                self._square_item(sea_wave, light_line, dark_line, (x, y))
+        if block_verticle:
+            self._black_rect(2)
+            while count < 5:
+                pygame.display.update()
+                if count == 1:
+                    self._square_item(sea_wave, light_line, dark_line, (x, y))
 
-            if count == 2:
-                self._square_item(sea_wave, light_line, dark_line, (x + self.w_cell, y))
+                if count == 2:
+                    self._square_item(
+                        sea_wave, light_line, dark_line, (x + self.w_cell, y)
+                    )
 
-            if count == 3:
-                self._square_item(sea_wave, light_line, dark_line, (x, y + self.h_cell))
+                if count == 3:
+                    self._square_item(
+                        sea_wave, light_line, dark_line, (x, y + self.h_cell)
+                    )
 
-            if count == 4:
-                self._square_item(
-                    sea_wave, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
-                )
+                if count == 4:
+                    self._square_item(
+                        sea_wave,
+                        light_line,
+                        dark_line,
+                        (x + self.w_cell, y + self.h_cell),
+                    )
 
-            count += 1
+                count += 1
 
-    def block_6(self):
+        else:
+            self._black_rect(2)
+            while count < 5:
+                pygame.display.update()
+
+                if count == 1:
+                    self._square_item(sea_wave, light_line, dark_line, (x, y))
+
+                if count == 2:
+                    self._square_item(
+                        sea_wave, light_line, dark_line, (x, y + self.h_cell)
+                    )
+
+                if count == 3:
+                    self._square_item(
+                        sea_wave, light_line, dark_line, (x + self.w_cell, y)
+                    )
+
+                if count == 4:
+                    self._square_item(
+                        sea_wave,
+                        light_line,
+                        dark_line,
+                        (x + self.w_cell, y + self.h_cell),
+                    )
+
+                count += 1
+
+    def block_6(self, block_verticle):
         gray = (164, 171, 187)
         light_gray = (255, 255, 255)
         dark_gray = (132, 132, 132)
         count = 1
 
-        x = 80
-        y = 10
+        x = 450
+        y = 500
 
-        while count < 5:
-            if count == 1:
-                self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
+        if block_verticle:
+            self._black_rect(3)
+            while count < 5:
+                if count == 1:
+                    self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
 
-            if count == 2:
-                self._square_item(
-                    gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
-                )
+                if count == 2:
+                    self._square_item(
+                        gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
+                    )
 
-            if count == 3:
-                self._square_item(
-                    gray, light_gray, dark_gray, (x + self.w_cell * 2, y + self.h_cell)
-                )
+                if count == 3:
+                    self._square_item(
+                        gray,
+                        light_gray,
+                        dark_gray,
+                        (x + self.w_cell * 2, y + self.h_cell),
+                    )
 
-            if count == 4:
-                self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
+                if count == 4:
+                    self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
 
-            count += 1
+                count += 1
+
+        else:
+            self._black_rect(3)
+
+            while count < 5:
+                pygame.display.update()
+                if count == 1:
+                    self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
+                if count == 2:
+                    self._square_item(
+                        gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
+                    )
+                if count == 3:
+                    self._square_item(
+                        gray,
+                        light_gray,
+                        dark_gray,
+                        (x + self.w_cell, y + self.h_cell * 2),
+                    )
+                if count == 4:
+                    self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
+
+                count += 1
+
+    def block_7(self, block_verticle):
+        green = (0, 175, 0)
+        light_line = (125, 255, 125)
+        dark_line = (0, 92, 0)
+        count = 1
+        x = 450
+        y = 500
+
+        if block_verticle:
+            self._black_rect(3)
+            while count < 5:
+                pygame.display.update()
+                if count == 1:
+                    self._square_item(green, light_line, dark_line, (x, y))
+                if count == 2:
+                    self._square_item(
+                        green, light_line, dark_line, (x + self.w_cell, y)
+                    )
+                if count == 3:
+                    self._square_item(
+                        green, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                    )
+                if count == 4:
+                    self._square_item(
+                        green,
+                        light_line,
+                        dark_line,
+                        (x + self.w_cell * 2, y + self.h_cell),
+                    )
+
+                count += 1
+
+        else:
+            self._black_rect(3)
+            while count < 5:
+                pygame.display.update()
+                if count == 1:
+                    self._square_item(green, light_line, dark_line, (x, y))
+                if count == 2:
+                    self._square_item(
+                        green, light_line, dark_line, (x, y + self.h_cell)
+                    )
+                if count == 3:
+                    self._square_item(
+                        green, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                    )
+                if count == 4:
+                    self._square_item(
+                        green,
+                        light_line,
+                        dark_line,
+                        (x + self.w_cell, y + self.h_cell * 2),
+                    )
+
+                count += 1

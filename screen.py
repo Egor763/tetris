@@ -15,35 +15,52 @@ class Screen:
 
         self.white = settings.white
 
+        self.black = (0, 0, 0)
+
         self.font_family = settings.font_family
         self.font_size = settings.font_size
         self.screen = pygame.display.set_mode(self.window_size)
         self.font = pygame.font.SysFont(self.font_family, self.font_size)
-        self.vert_line_x_left = 48
-        self.vert_line_x_right = 352
-        self.horiz_line_y = 610
-        self.w_cell = 30
-        self.h_cell = 30
+        self.vert_line_x_left = settings.x_start_area - 2
+        self.vert_line_x_right = settings.x_end_area + 2
+        self.x_start_area = settings.x_start_area
+        self.y_start_area = settings.y_start_area
+        self.x_end_area = settings.x_end_area
+        self.y_end_area = settings.y_end_area
+        self.w_cell = settings.w_cell
+        self.h_cell = settings.h_cell
 
         pygame.display.set_caption("Тетрис")
 
     def screen_game(self):
+        self.screen.fill(self.black)
         return self.screen
 
     def handle_grid(self):
         color = (59, 59, 59)
-        self.y = 10
-        self.x = 50
+        self.y = self.y_start_area
+        self.x = self.x_start_area
 
-        while self.y < 610:
-            pygame.draw.line(self.screen, color, (50, self.y), (352, self.y), 1)
+        while self.y < self.y_end_area:
+            pygame.draw.line(
+                self.screen,
+                color,
+                (self.x_start_area, self.y),
+                (self.x_end_area + 2, self.y),
+                1,
+            )
 
-            self.y = self.y + 30
+            self.y = self.y + self.h_cell
 
-        while self.x < 352:
-            pygame.draw.line(self.screen, color, (self.x, 10), (self.x, 610))
+        while self.x < self.x_end_area + 2:
+            pygame.draw.line(
+                self.screen,
+                color,
+                (self.x, self.y_start_area),
+                (self.x, self.y_end_area),
+            )
 
-            self.x = self.x + 30
+            self.x = self.x + self.w_cell
 
     def handle_state_data(self):
         self.handle_grid()
@@ -60,7 +77,7 @@ class Screen:
         )
         self.next = self.font.render("Следующий", True, self.gray)
 
-        self.screen.blit(self.score_text, [550, 10])
+        self.screen.blit(self.score_text, [550, self.y_start_area])
         self.screen.blit(self.score_number, [575, 35])
         self.screen.blit(self.level_text, [530, 70])
         self.screen.blit(self.level_number, [575, 95])
@@ -74,23 +91,23 @@ class Screen:
         pygame.draw.line(
             self.screen,
             self.white,
-            (self.vert_line_x_left, 10),
-            (self.vert_line_x_left, 610),
+            (self.vert_line_x_left, self.y_start_area),
+            (self.vert_line_x_left, self.y_end_area),
             2,
         )
         # горизонтальная линия игрового поля
         pygame.draw.line(
             self.screen,
             self.white,
-            (50, self.horiz_line_y),
-            (350, self.horiz_line_y),
+            (self.x_start_area, self.y_end_area),
+            (self.x_end_area, self.y_end_area),
             2,
         )
         # правая линия игрового поля
         pygame.draw.line(
             self.screen,
             self.white,
-            (self.vert_line_x_right, 10),
-            (self.vert_line_x_right, 610),
+            (self.vert_line_x_right, self.y_start_area),
+            (self.vert_line_x_right, self.y_end_area),
             2,
         )
