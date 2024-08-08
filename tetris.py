@@ -2,6 +2,7 @@ import pygame
 from screen import Screen
 from blocks import Blocks
 from move_blocks import MoveBlocks
+import settings
 
 
 class Tetris:
@@ -12,14 +13,24 @@ class Tetris:
         self.screen = self.screen_class.screen_game()
         self.blocks = Blocks(self.screen)
         self.move_blocks = MoveBlocks()
+        self.y_end_area = settings.y_end_area
+
+        self.current_block = settings.current_block
 
         self.screen_class.handle_state_data()
 
-        pygame.time.set_timer(pygame.USEREVENT, 1000)
+        pygame.time.set_timer(pygame.USEREVENT, 500)
 
-        self.block_verticle = True
+        self.w_cell = settings.w_cell
+        self.h_cell = settings.h_cell
 
-        self.y_block = 10
+        # self.current_block["coord"][1] = 10
+
+        self.blocks.random_num()
+
+        self.blocks.create_block(
+            self.current_block["position"], self.current_block["coord"]
+        )
 
         pygame.display.update()
 
@@ -38,18 +49,32 @@ class Tetris:
 
                 # таймер
                 if event.type == pygame.USEREVENT:
-                    self.y_block = self.move_blocks.change_coord(self.y_block)
-                    self.blocks.block_2(self.block_verticle, self.y_block)
+                    # self.blocks.random_block(self.current_block["position"], self.current_block["coord"][1])
+                    self.blocks.create_block(
+                        self.current_block["position"], self.current_block["coord"]
+                    )
+                    # TODO доделать (четыре количества клеток фигуры по вертикали)
+                    if (
+                        self.current_block["coord"][1] + self.h_cell * 4
+                        < self.y_end_area
+                    ):
+
+                        self.current_block["coord"][1] = self.move_blocks.change_coord(
+                            self.current_block["coord"][1]
+                        )
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_KP5:
-                        if self.block_verticle:
-                            self.block_verticle = False
+                        if self.current_block["position"]:
+                            self.current_block["position"] = False
 
                         else:
-                            self.block_verticle = True
+                            self.current_block["position"] = True
 
-                        self.blocks.block_2(self.block_verticle)
+                        self.blocks.create_block(
+                            self.current_block["position"],
+                            self.current_block["coord"],
+                        )
 
             # pygame.display.update()
 

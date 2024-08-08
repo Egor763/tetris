@@ -15,7 +15,19 @@ y_end_area = 610
 x_end_area = 350
 x_next_block = 450
 y_next_block = 500
+
+
+current_block = {
+    "num": 7,
+    "position": True,
+    "coord": [170, 10],
+    "cells_block": (0, 0),
+    "count_block_screen": 0,
+}
+
+blocks = {}
 window_size = (W, H)
+# num_block = 7
 
 score = 0
 level = 0
