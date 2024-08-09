@@ -19,12 +19,18 @@ class Blocks:
         self.h_cell = settings.h_cell
         self.black = (0, 0, 0)
 
+        self.num_next_block = settings.num_next_block
+
         self.current_block = settings.current_block
 
         self.border_width = 1
 
-    def random_num(self):
-        self.current_block["num"] = random.randrange(1, 8)
+    def random_num(self, next_num):
+        if next_num:
+            self.num_next_block = random.randrange(1, 8)
+
+        else:
+            self.current_block["num"] = random.randrange(1, 8)
 
     def create_block(self, block_verticle, coord):
 

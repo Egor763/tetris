@@ -16,6 +16,11 @@ x_end_area = 350
 x_next_block = 450
 y_next_block = 500
 
+num_next_block = 0
+
+
+key_button = ""
+
 
 current_block = {
     "num": 7,

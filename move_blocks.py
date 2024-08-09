@@ -14,3 +14,15 @@ class MoveBlocks:
         y = initial_coord + self.h_cell
 
         return y
+
+    # def change_coord_x_left(self, coord):
+    #     print("m")
+    #     x = coord - self.w_cell
+
+    #     return x
+
+    # def change_coord_x_right(self, coord):
+    #     print("l")
+    #     x = coord + self.w_cell
+
+    #     return x

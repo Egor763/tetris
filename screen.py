@@ -34,6 +34,7 @@ class Screen:
 
     def screen_game(self):
         self.screen.fill(self.black)
+        self.handle_state_data()
         return self.screen
 
     def handle_grid(self):
