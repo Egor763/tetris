@@ -21,7 +21,12 @@ class Blocks:
 
         self.num_next_block = settings.num_next_block
 
+        self.x_next_block = settings.x_next_block
+        self.y_next_block = settings.y_next_block
+
         self.current_block = settings.current_block
+
+        self.key_button = settings.key_button
 
         self.border_width = 1
 
@@ -31,6 +36,8 @@ class Blocks:
 
         else:
             self.current_block["num"] = random.randrange(1, 8)
+
+        self.next_image()
 
     def create_block(self, block_verticle, coord):
 
@@ -54,6 +61,16 @@ class Blocks:
 
         if self.current_block["num"] == 7:
             self.block_7(block_verticle, coord)
+
+    def next_image(self):
+        next_block = random.randrange(1, 8)
+
+        if self.key_button:
+            block = self.create_block(True, (self.x_next_block, self.y_next_block))
+
+        print(next_block)
+
+        # self.screen.blit(next_block, (self.x_next_block, self.y_next_block))
 
     def _square_item(self, color, color_light, color_dark, coord):
         size_rect = 29

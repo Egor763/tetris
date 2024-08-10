@@ -51,7 +51,6 @@ class Tetris:
             self.current_time = pygame.time.get_ticks()
 
             for event in pygame.event.get():
-
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
