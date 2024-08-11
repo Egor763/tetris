@@ -30,47 +30,47 @@ class Blocks:
 
         self.border_width = 1
 
-    def random_num(self, next_num):
-        if next_num:
-            self.num_next_block = random.randrange(1, 8)
+    def random_num(self):
+        # if next_num:
+        #     self.num_next_block = random.randrange(1, 8)
 
-        else:
-            self.current_block["num"] = random.randrange(1, 8)
+        # else:
+        #     self.current_block["num"] = random.randrange(1, 8)
 
-        self.next_image()
+        return random.randrange(1, 8)
 
-    def create_block(self, block_verticle, coord):
+    def create_block(self, block_verticle, coord, num_block):
 
-        if self.current_block["num"] == 1:
+        if num_block == 1:
             self.block_1(block_verticle, coord)
 
-        if self.current_block["num"] == 2:
+        if num_block == 2:
             self.block_2(block_verticle, coord)
 
-        if self.current_block["num"] == 3:
+        if num_block == 3:
             self.block_3(block_verticle, coord)
 
-        if self.current_block["num"] == 4:
+        if num_block == 4:
             self.block_4(block_verticle, coord)
 
-        if self.current_block["num"] == 5:
+        if num_block == 5:
             self.block_5(block_verticle, coord)
 
-        if self.current_block["num"] == 6:
+        if num_block == 6:
             self.block_6(block_verticle, coord)
 
-        if self.current_block["num"] == 7:
+        if num_block == 7:
             self.block_7(block_verticle, coord)
 
-    def next_image(self):
-        next_block = random.randrange(1, 8)
+    def next_image(self, num_block):
+        # next_block = random.randrange(1, 8)
 
-        if self.key_button:
-            block = self.create_block(True, (self.x_next_block, self.y_next_block))
+        # if self.key_button:
+        self.create_block(True, (self.x_next_block, self.y_next_block), num_block)
 
-        print(next_block)
+    # print(next_block)
 
-        # self.screen.blit(next_block, (self.x_next_block, self.y_next_block))
+    # self.screen.blit(next_block, (self.x_next_block, self.y_next_block))
 
     def _square_item(self, color, color_light, color_dark, coord):
         size_rect = 29
@@ -132,9 +132,9 @@ class Blocks:
                 self._square_item(red, light_line, dark_line, (x + self.w_cell, y))
                 y += self.h_cell
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
         else:
             self.current_block["cells_block"] = (4, 1)
@@ -144,9 +144,9 @@ class Blocks:
                 self._square_item(red, light_line, dark_line, (x, y))
                 x += self.w_cell
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
     def block_2(self, block_verticle, coord):
         blue = (0, 0, 255)
@@ -175,8 +175,10 @@ class Blocks:
                     self._square_item(
                         blue, light_line, dark_line, (x + self.w_cell * 2, y)
                     )
-                pygame.display.update()
+
                 count += 1
+
+            pygame.display.update()
 
         else:
             self.current_block["cells_block"] = (2, 3)
@@ -200,9 +202,9 @@ class Blocks:
                         dark_line,
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
     def block_3(self, block_verticle, coord):
         yellow = (255, 255, 0)
@@ -229,9 +231,10 @@ class Blocks:
                         dark_line,
                         (x + self.w_cell, y - self.h_cell),
                     )
-                pygame.display.update()
 
                 count += 1
+
+            pygame.display.update()
 
         else:
             self.current_block["cells_block"] = (3, 2)
@@ -251,9 +254,9 @@ class Blocks:
                         dark_line,
                         (x - self.w_cell, y),
                     )
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
     def block_4(self, block_verticle, coord):
         pink = (175, 0, 175)
@@ -277,9 +280,9 @@ class Blocks:
                 else:
                     self._square_item(pink, light_line, dark_line, (x, y - self.h_cell))
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
         else:
             self.current_block["cells_block"] = (3, 2)
@@ -293,9 +296,9 @@ class Blocks:
                         pink, light_line, dark_line, (x - self.w_cell, y + self.h_cell)
                     )
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
     # квадрат
     def block_5(self, block_verticle, coord):
@@ -329,9 +332,9 @@ class Blocks:
                     (x + self.w_cell, y + self.h_cell),
                 )
 
-            pygame.display.update()
-
             count += 1
+
+        pygame.display.update()
 
         # else:
         #     while count < 5:
@@ -393,8 +396,9 @@ class Blocks:
                 if count == 4:
                     self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
 
-                pygame.display.update()
                 count += 1
+
+            pygame.display.update()
 
         else:
             self.current_block["cells_block"] = (2, 3)
@@ -416,9 +420,9 @@ class Blocks:
                 if count == 4:
                     self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
     def block_7(self, block_verticle, coord):
         green = (0, 175, 0)
@@ -450,9 +454,9 @@ class Blocks:
                         (x + self.w_cell * 2, y + self.h_cell),
                     )
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
 
         else:
             self.current_block["cells_block"] = (2, 3)
@@ -476,6 +480,6 @@ class Blocks:
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
 
-                pygame.display.update()
-
                 count += 1
+
+            pygame.display.update()
