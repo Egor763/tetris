@@ -20,9 +20,11 @@ class Tetris:
 
         self.num_next_block = settings.num_next_block
 
-        self.num_next_block = settings.num_next_block
+        self.coords_blocks = settings.coords_blocks
 
         self.current_block = settings.current_block
+
+        self.figurs = settings.figurs
 
         self.screen_class.handle_state_data()
 
@@ -38,7 +40,11 @@ class Tetris:
 
         # self.current_block["coord"][1] = 10
 
-        self.current_block["num"] = self.blocks.random_num()
+        # print(self.blocks.)
+
+        # self.current_block["num"] = self.blocks.random_num()
+        self.current_block["num"] = 7
+        # self.current_block["is_current"] = True
         self.num_next_block = self.blocks.random_num()
 
         self.blocks.create_block(
@@ -55,10 +61,6 @@ class Tetris:
         while True:
             self.screen_class.screen_game()
 
-            # pygame.display.update()
-
-            # self.screen_class.handle_state_data()
-
             self.current_time = pygame.time.get_ticks()
 
             for event in pygame.event.get():
@@ -69,34 +71,44 @@ class Tetris:
                 # таймер
                 if event.type == self.USEREVENT and not bool(self.key_button):
 
+                    print(self.coords_blocks["block_7"])
+
                     self.blocks.next_image(self.num_next_block)
 
-                    # print(self.current_block["cells_block"])
-                    # self.blocks.random_block(self.current_block["position"], self.current_block["coord"][1])
                     self.blocks.create_block(
                         self.current_block["position"],
                         self.current_block["coord"],
                         self.current_block["num"],
                     )
+
                     if (
                         self.current_block["coord"][1]
                         + self.h_cell * self.current_block["cells_block"][1]
                         < self.y_end_area
+                        # and self.current_block["is_current"]
                     ):
 
                         self.current_block["coord"][1] = self.move_blocks.change_coord(
                             self.current_block["coord"][1]
                         )
 
-                    if (
+                    elif (
                         self.current_block["coord"][1]
                         + self.h_cell * self.current_block["cells_block"][1]
-                        >= self.y_end_area
+                        == self.y_end_area
+                        # and self.current_block["is_current"]
+                        # and self.current_block["is_current"]
                     ):
+                        # pygame.time.set_timer(self.USEREVENT, 0)
+
+                        # self.current_block["is_current"] = False
+
+                        self.current_block["coord"][1] = self.y_start_area
+
+                        # pygame.time.set_timer(self.USEREVENT, 500)
+
                         self.current_block["num"] = self.num_next_block
                         self.num_next_block = self.blocks.random_num()
-
-                        print("n")
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_KP5:
@@ -163,6 +175,24 @@ class Tetris:
                         pygame.time.set_timer(self.USEREVENT, 500)
 
                         self.key_button = ""
+
+            # if (
+            #     self.current_block["coord"][1]
+            #     + self.h_cell * self.current_block["cells_block"][1]
+            #     - self.h_cell
+            #     == self.y_end_area
+            #     # and self.current_block["is_current"]
+            # ):
+            #     # pygame.time.set_timer(self.USEREVENT, 0)
+
+            #     # self.current_block["is_current"] = False
+
+            #     self.current_block["coord"][1] = self.y_start_area
+
+            #     # pygame.time.set_timer(self.USEREVENT, 500)
+
+            #     self.current_block["num"] = self.num_next_block
+            #     self.num_next_block = self.blocks.random_num()
 
             self.clock.tick(200)
 

@@ -21,6 +21,8 @@ class Blocks:
 
         self.num_next_block = settings.num_next_block
 
+        self.coords_blocks = settings.coords_blocks
+
         self.x_next_block = settings.x_next_block
         self.y_next_block = settings.y_next_block
 
@@ -129,6 +131,8 @@ class Blocks:
         if block_verticle:
             self.current_block["cells_block"] = (1, 4)
             while count < 5:
+                self.coords_blocks["block_1"][str(count)][0] = x + self.w_cell
+                self.coords_blocks["block_1"][str(count)][1] = y
                 self._square_item(red, light_line, dark_line, (x + self.w_cell, y))
                 y += self.h_cell
 
@@ -140,7 +144,8 @@ class Blocks:
             self.current_block["cells_block"] = (4, 1)
 
             while count < 5:
-
+                self.coords_blocks["block_1"][str(count)][0] = x
+                self.coords_blocks["block_1"][str(count)][1] = y
                 self._square_item(red, light_line, dark_line, (x, y))
                 x += self.w_cell
 
@@ -162,19 +167,62 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-
-                    self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
-                if count == 2:
+                    self.coords_blocks["block_2"]["1"][0] = x
+                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
                     self._square_item(
-                        blue, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                        blue,
+                        light_line,
+                        dark_line,
+                        (
+                            self.coords_blocks["block_2"]["1"][0],
+                            self.coords_blocks["block_2"]["1"][1],
+                        ),
                     )
+                    # self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
+                if count == 2:
+                    self.coords_blocks["block_2"]["2"][0] = x + self.w_cell
+                    self.coords_blocks["block_2"]["2"][1] = y + self.h_cell
+                    self._square_item(
+                        blue,
+                        light_line,
+                        dark_line,
+                        (
+                            self.coords_blocks["block_2"]["2"][0],
+                            self.coords_blocks["block_2"]["2"][1],
+                        ),
+                    )
+                    # self._square_item(
+                    #     blue, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                    # )
                 if count == 3:
-                    self._square_item(blue, light_line, dark_line, (x + self.w_cell, y))
+                    self.coords_blocks["block_2"]["3"][0] = x + self.w_cell
+                    self.coords_blocks["block_2"]["3"][1] = y
+                    self._square_item(
+                        blue,
+                        light_line,
+                        dark_line,
+                        (
+                            self.coords_blocks["block_2"]["3"][0],
+                            self.coords_blocks["block_2"]["3"][1],
+                        ),
+                    )
+                    # self._square_item(blue, light_line, dark_line, (x + self.w_cell, y))
 
                 if count == 4:
+                    self.coords_blocks["block_2"]["4"][0] = x + self.w_cell * 2
+                    self.coords_blocks["block_2"]["4"][1] = y
                     self._square_item(
-                        blue, light_line, dark_line, (x + self.w_cell * 2, y)
+                        blue,
+                        light_line,
+                        dark_line,
+                        (
+                            self.coords_blocks["block_2"]["4"][0],
+                            self.coords_blocks["block_2"]["4"][1],
+                        ),
                     )
+                    # self._square_item(
+                    #     blue, light_line, dark_line, (x + self.w_cell * 2, y)
+                    # )
 
                 count += 1
 
@@ -185,10 +233,18 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
+                    self.coords_blocks["block_2"]["1"][0] = x
+                    self.coords_blocks["block_2"]["1"][1] = y
                     self._square_item(blue, light_line, dark_line, (x, y))
+                    # self._square_item(blue, light_line, dark_line, (x, y))
                 if count == 2:
+                    self.coords_blocks["block_2"]["1"][0] = x
+                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
                     self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
+                    # self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
                 if count == 3:
+                    self.coords_blocks["block_2"]["1"][0] = x + self.w_cell
+                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
                     self._square_item(
                         blue,
                         light_line,
@@ -196,6 +252,8 @@ class Blocks:
                         (x + self.w_cell, y + self.h_cell),
                     )
                 if count == 4:
+                    self.coords_blocks["block_2"]["1"][0] = x + self.w_cell
+                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell * 2
                     self._square_item(
                         blue,
                         light_line,
@@ -220,11 +278,15 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
+                    self.coords_blocks["block_3"][str(count)][0] = x
+                    self.coords_blocks["block_3"][str(count)][1] = y
                     self._square_item(yellow, light_line, dark_line, (x, y))
 
                     y += self.h_cell
 
                 else:
+                    self.coords_blocks["block_3"]["4"][0] = x + self.w_cell
+                    self.coords_blocks["block_3"]["4"][1] = y - self.h_cell
                     self._square_item(
                         yellow,
                         light_line,
@@ -241,6 +303,8 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
+                    self.coords_blocks["block_3"][str(count)][0] = x
+                    self.coords_blocks["block_3"][str(count)][1] = y + self.h_cell
                     self._square_item(
                         yellow, light_line, dark_line, (x, y + self.h_cell)
                     )
@@ -248,6 +312,8 @@ class Blocks:
                     x += self.w_cell
 
                 else:
+                    self.coords_blocks["block_3"]["4"][0] = x - self.w_cell
+                    self.coords_blocks["block_3"]["4"][1] = y
                     self._square_item(
                         yellow,
                         light_line,
@@ -273,11 +339,15 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
+                    self.coords_blocks["block_4"][str(count)][0] = x + self.w_cell
+                    self.coords_blocks["block_4"][str(count)][1] = y
                     self._square_item(pink, light_line, dark_line, (x + self.w_cell, y))
 
                     y += self.h_cell
 
                 else:
+                    self.coords_blocks["block_4"]["4"][0] = x
+                    self.coords_blocks["block_4"]["4"][1] = y - self.h_cell
                     self._square_item(pink, light_line, dark_line, (x, y - self.h_cell))
 
                 count += 1
@@ -289,9 +359,13 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
+                    self.coords_blocks["block_4"][str(count)][0] = x
+                    self.coords_blocks["block_4"][str(count)][1] = y
                     self._square_item(pink, light_line, dark_line, (x, y))
                     x += self.w_cell
                 else:
+                    self.coords_blocks["block_4"]["4"][0] = x - self.w_cell
+                    self.coords_blocks["block_4"]["4"][1] = y + self.h_cell
                     self._square_item(
                         pink, light_line, dark_line, (x - self.w_cell, y + self.h_cell)
                     )
@@ -316,15 +390,23 @@ class Blocks:
 
         while count < 5:
             if count == 1:
+                self.coords_blocks["block_5"]["1"][0] = x
+                self.coords_blocks["block_5"]["1"][1] = y
                 self._square_item(sea_wave, light_line, dark_line, (x, y))
 
             if count == 2:
+                self.coords_blocks["block_5"]["2"][0] = x + self.w_cell
+                self.coords_blocks["block_5"]["2"][1] = y
                 self._square_item(sea_wave, light_line, dark_line, (x + self.w_cell, y))
 
             if count == 3:
+                self.coords_blocks["block_5"]["3"][0] = x
+                self.coords_blocks["block_5"]["3"][1] = y + self.h_cell
                 self._square_item(sea_wave, light_line, dark_line, (x, y + self.h_cell))
 
             if count == 4:
+                self.coords_blocks["block_5"]["4"][0] = x + self.w_cell
+                self.coords_blocks["block_5"]["4"][1] = y + self.h_cell
                 self._square_item(
                     sea_wave,
                     light_line,
@@ -378,14 +460,20 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
+                    self.coords_blocks["block_6"]["1"][0] = x
+                    self.coords_blocks["block_6"]["1"][1] = y + self.h_cell
                     self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
 
                 if count == 2:
+                    self.coords_blocks["block_6"]["2"][0] = x + self.w_cell
+                    self.coords_blocks["block_6"]["2"][1] = y + self.h_cell
                     self._square_item(
                         gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
                     )
 
                 if count == 3:
+                    self.coords_blocks["block_6"]["3"][0] = x + self.w_cell * 2
+                    self.coords_blocks["block_6"]["3"][1] = y + self.h_cell
                     self._square_item(
                         gray,
                         light_gray,
@@ -394,6 +482,8 @@ class Blocks:
                     )
 
                 if count == 4:
+                    self.coords_blocks["block_6"]["4"][0] = x + self.w_cell
+                    self.coords_blocks["block_6"]["4"][1] = y
                     self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
 
                 count += 1
@@ -405,12 +495,18 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
+                    self.coords_blocks["block_6"]["1"][0] = x + self.w_cell
+                    self.coords_blocks["block_6"]["1"][1] = y
                     self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
                 if count == 2:
+                    self.coords_blocks["block_6"]["2"][0] = x + self.w_cell
+                    self.coords_blocks["block_6"]["2"][1] = y + self.h_cell
                     self._square_item(
                         gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
                     )
                 if count == 3:
+                    self.coords_blocks["block_6"]["3"][0] = x + self.w_cell
+                    self.coords_blocks["block_6"]["3"][1] = y + self.h_cell * 2
                     self._square_item(
                         gray,
                         light_gray,
@@ -418,6 +514,8 @@ class Blocks:
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
                 if count == 4:
+                    self.coords_blocks["block_6"]["4"][0] = x
+                    self.coords_blocks["block_6"]["4"][1] = y + self.h_cell
                     self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
 
                 count += 1
@@ -437,16 +535,24 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
+                    self.coords_blocks["block_7"]["1"][0] = x
+                    self.coords_blocks["block_7"]["1"][1] = y
                     self._square_item(green, light_line, dark_line, (x, y))
                 if count == 2:
+                    self.coords_blocks["block_7"]["2"][0] = x + self.w_cell
+                    self.coords_blocks["block_7"]["2"][1] = y
                     self._square_item(
                         green, light_line, dark_line, (x + self.w_cell, y)
                     )
                 if count == 3:
+                    self.coords_blocks["block_7"]["3"][0] = x + self.w_cell
+                    self.coords_blocks["block_7"]["3"][1] = y + self.h_cell
                     self._square_item(
                         green, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
                     )
                 if count == 4:
+                    self.coords_blocks["block_7"]["4"][0] = x + self.w_cell * 2
+                    self.coords_blocks["block_7"]["4"][1] = y + self.h_cell
                     self._square_item(
                         green,
                         light_line,
@@ -463,16 +569,24 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
+                    self.coords_blocks["block_7"]["1"][0] = x
+                    self.coords_blocks["block_7"]["1"][1] = y
                     self._square_item(green, light_line, dark_line, (x, y))
                 if count == 2:
+                    self.coords_blocks["block_7"]["2"][0] = x
+                    self.coords_blocks["block_7"]["2"][1] = y + self.h_cell
                     self._square_item(
                         green, light_line, dark_line, (x, y + self.h_cell)
                     )
                 if count == 3:
+                    self.coords_blocks["block_7"]["3"][0] = x + self.w_cell
+                    self.coords_blocks["block_7"]["3"][1] = y + self.h_cell
                     self._square_item(
                         green, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
                     )
                 if count == 4:
+                    self.coords_blocks["block_7"]["4"][0] = x + self.w_cell
+                    self.coords_blocks["block_7"]["4"][1] = y + self.h_cell * 2
                     self._square_item(
                         green,
                         light_line,
