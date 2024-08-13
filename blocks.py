@@ -41,40 +41,78 @@ class Blocks:
 
         return random.randrange(1, 8)
 
-    def create_block(self, block_verticle, coord, num_block):
+    def create_block(self, block_verticle, coord, num_block, next_figure):
 
         if num_block == 1:
-            self.block_1(block_verticle, coord)
+            self.block_1(block_verticle, coord, next_figure)
 
         if num_block == 2:
-            self.block_2(block_verticle, coord)
+            self.block_2(block_verticle, coord, next_figure)
 
         if num_block == 3:
-            self.block_3(block_verticle, coord)
+            self.block_3(block_verticle, coord, next_figure)
 
         if num_block == 4:
-            self.block_4(block_verticle, coord)
+            self.block_4(block_verticle, coord, next_figure)
 
         if num_block == 5:
-            self.block_5(block_verticle, coord)
+            self.block_5(block_verticle, coord, next_figure)
 
         if num_block == 6:
-            self.block_6(block_verticle, coord)
+            self.block_6(block_verticle, coord, next_figure)
 
         if num_block == 7:
-            self.block_7(block_verticle, coord)
+            self.block_7(block_verticle, coord, next_figure)
 
-    def next_image(self, num_block):
+    def next_image(self, num_block, next_figure):
         # next_block = random.randrange(1, 8)
 
         # if self.key_button:
-        self.create_block(True, (self.x_next_block, self.y_next_block), num_block)
+        self.create_block(
+            True, (self.x_next_block, self.y_next_block), num_block, next_figure
+        )
 
     # print(next_block)
 
     # self.screen.blit(next_block, (self.x_next_block, self.y_next_block))
 
-    def _square_item(self, color, color_light, color_dark, coord):
+    def _square_item(self, square_color, coord):
+
+        if square_color == "red":
+            color = (255, 0, 0)
+            color_light = (151, 151, 255)
+            color_dark = (0, 0, 130)
+
+        elif square_color == "blue":
+            color = (0, 0, 255)
+            color_light = (255, 142, 142)
+            color_dark = (119, 0, 0)
+
+        elif square_color == "yellow":
+            color = (255, 255, 0)
+            color_light = (255, 237, 157)
+            color_dark = (110, 96, 32)
+
+        elif square_color == "pink":
+            color = (175, 0, 175)
+            color_light = (255, 0, 255)
+            color_dark = (95, 0, 95)
+
+        elif square_color == "sea_wave":
+            color = (53, 153, 252)
+            color_light = (169, 212, 255)
+            color_dark = (59, 86, 113)
+
+        elif square_color == "gray":
+            color = (164, 171, 187)
+            color_light = (255, 255, 255)
+            color_dark = (132, 132, 132)
+
+        elif square_color == "green":
+            color = (0, 175, 0)
+            color_light = (125, 255, 125)
+            color_dark = (0, 92, 0)
+
         size_rect = 29
         x = coord[0]
         y = coord[1]
@@ -118,10 +156,7 @@ class Blocks:
             self.border_width,
         )
 
-    def block_1(self, block_verticle, coord):
-        red = (255, 0, 0)
-        light_line = (151, 151, 255)
-        dark_line = (0, 0, 130)
+    def block_1(self, block_verticle, coord, next_figure):
 
         count = 1
 
@@ -131,9 +166,10 @@ class Blocks:
         if block_verticle:
             self.current_block["cells_block"] = (1, 4)
             while count < 5:
-                self.coords_blocks["block_1"][str(count)][0] = x + self.w_cell
-                self.coords_blocks["block_1"][str(count)][1] = y
-                self._square_item(red, light_line, dark_line, (x + self.w_cell, y))
+                if not next_figure:
+                    self.coords_blocks[f"{count}red"] = [x + self.w_cell, y]
+                # self.coords_blocks["block_1"][str(count)][1] = y
+                self._square_item("red", (x + self.w_cell, y))
                 y += self.h_cell
 
                 count += 1
@@ -144,19 +180,18 @@ class Blocks:
             self.current_block["cells_block"] = (4, 1)
 
             while count < 5:
-                self.coords_blocks["block_1"][str(count)][0] = x
-                self.coords_blocks["block_1"][str(count)][1] = y
-                self._square_item(red, light_line, dark_line, (x, y))
+                # self.coords_blocks["block_1"][str(count)][0] = x
+                # self.coords_blocks["block_1"][str(count)][1] = y
+                self.coords_blocks[f"{count}red"] = [x, y]
+                self._square_item("red", (x, y))
                 x += self.w_cell
 
                 count += 1
 
             pygame.display.update()
 
-    def block_2(self, block_verticle, coord):
-        blue = (0, 0, 255)
-        light_line = (255, 142, 142)
-        dark_line = (119, 0, 0)
+    def block_2(self, block_verticle, coord, next_figure):
+
         count = 1
 
         x = coord[0]
@@ -167,61 +202,55 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["block_2"]["1"][0] = x
-                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
+                    # self.coords_blocks["block_2"]["1"][0] = x
+                    # self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["1blue"] = [x, y + self.h_cell]
                     self._square_item(
-                        blue,
-                        light_line,
-                        dark_line,
-                        (
-                            self.coords_blocks["block_2"]["1"][0],
-                            self.coords_blocks["block_2"]["1"][1],
-                        ),
+                        "blue",
+                        (x, y + self.h_cell),
                     )
-                    # self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
+                    # self._square_item(blue, color_light, color_dark, (x, y + self.h_cell))
                 if count == 2:
-                    self.coords_blocks["block_2"]["2"][0] = x + self.w_cell
-                    self.coords_blocks["block_2"]["2"][1] = y + self.h_cell
+                    # self.coords_blocks["block_2"]["2"][0] = x + self.w_cell
+                    # self.coords_blocks["block_2"]["2"][1] = y + self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["2blue"] = [
+                            x + self.w_cell,
+                            y + self.h_cell,
+                        ]
                     self._square_item(
-                        blue,
-                        light_line,
-                        dark_line,
-                        (
-                            self.coords_blocks["block_2"]["2"][0],
-                            self.coords_blocks["block_2"]["2"][1],
-                        ),
+                        "blue",
+                        (x + self.w_cell, y + self.h_cell),
                     )
                     # self._square_item(
-                    #     blue, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                    #     blue, color_light, color_dark, (x + self.w_cell, y + self.h_cell)
                     # )
                 if count == 3:
-                    self.coords_blocks["block_2"]["3"][0] = x + self.w_cell
-                    self.coords_blocks["block_2"]["3"][1] = y
+                    # self.coords_blocks["block_2"]["3"][0] = x + self.w_cell
+                    # self.coords_blocks["block_2"]["3"][1] = y
+                    if not next_figure:
+                        self.coords_blocks["3blue"] = [x + self.w_cell, y]
                     self._square_item(
-                        blue,
-                        light_line,
-                        dark_line,
-                        (
-                            self.coords_blocks["block_2"]["3"][0],
-                            self.coords_blocks["block_2"]["3"][1],
-                        ),
+                        "blue",
+                        (x + self.w_cell, y),
                     )
-                    # self._square_item(blue, light_line, dark_line, (x + self.w_cell, y))
+                    # self._square_item(blue, color_light, color_dark, (x + self.w_cell, y))
 
                 if count == 4:
-                    self.coords_blocks["block_2"]["4"][0] = x + self.w_cell * 2
-                    self.coords_blocks["block_2"]["4"][1] = y
+                    if not next_figure:
+                        self.coords_blocks["4blue"] = [
+                            x + self.w_cell * 2,
+                            y,
+                        ]
+                    # self.coords_blocks["block_2"]["4"][0] = x + self.w_cell * 2
+                    # self.coords_blocks["block_2"]["4"][1] = y
                     self._square_item(
-                        blue,
-                        light_line,
-                        dark_line,
-                        (
-                            self.coords_blocks["block_2"]["4"][0],
-                            self.coords_blocks["block_2"]["4"][1],
-                        ),
+                        "blue",
+                        (x + self.w_cell * 2, y),
                     )
                     # self._square_item(
-                    #     blue, light_line, dark_line, (x + self.w_cell * 2, y)
+                    #     blue, color_light, color_dark, (x + self.w_cell * 2, y)
                     # )
 
                 count += 1
@@ -233,41 +262,45 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["block_2"]["1"][0] = x
-                    self.coords_blocks["block_2"]["1"][1] = y
-                    self._square_item(blue, light_line, dark_line, (x, y))
-                    # self._square_item(blue, light_line, dark_line, (x, y))
+                    # self.coords_blocks["block_2"]["1"][0] = x
+                    # self.coords_blocks["block_2"]["1"][1] = y
+                    self.coords_blocks["1blue"] = [x, y]
+                    self._square_item("blue", (x, y))
+                    # self._square_item(blue, color_light, color_dark, (x, y))
                 if count == 2:
-                    self.coords_blocks["block_2"]["1"][0] = x
-                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
-                    self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
-                    # self._square_item(blue, light_line, dark_line, (x, y + self.h_cell))
+                    # self.coords_blocks["block_2"]["1"][0] = x
+                    # self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
+                    self.coords_blocks["2blue"] = [x, y + self.h_cell]
+                    self._square_item("blue", (x, y + self.h_cell))
+                    # self._square_item(blue, color_light, color_dark, (x, y + self.h_cell))
                 if count == 3:
-                    self.coords_blocks["block_2"]["1"][0] = x + self.w_cell
-                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
+                    # self.coords_blocks["block_2"]["1"][0] = x + self.w_cell
+                    # self.coords_blocks["block_2"]["1"][1] = y + self.h_cell
+                    self.coords_blocks["3blue"] = [
+                        x + self.w_cell,
+                        y + self.h_cell,
+                    ]
                     self._square_item(
-                        blue,
-                        light_line,
-                        dark_line,
+                        "blue",
                         (x + self.w_cell, y + self.h_cell),
                     )
                 if count == 4:
-                    self.coords_blocks["block_2"]["1"][0] = x + self.w_cell
-                    self.coords_blocks["block_2"]["1"][1] = y + self.h_cell * 2
+                    # self.coords_blocks["block_2"]["1"][0] = x + self.w_cell
+                    # self.coords_blocks["block_2"]["1"][1] = y + self.h_cell * 2
+                    self.coords_blocks["4blue"] = [
+                        x + self.w_cell,
+                        y + self.h_cell * 2,
+                    ]
                     self._square_item(
-                        blue,
-                        light_line,
-                        dark_line,
+                        "blue",
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
                 count += 1
 
             pygame.display.update()
 
-    def block_3(self, block_verticle, coord):
-        yellow = (255, 255, 0)
-        light_line = (255, 237, 157)
-        dark_line = (110, 96, 32)
+    def block_3(self, block_verticle, coord, next_figure):
+
         count = 1
 
         x = coord[0]
@@ -278,19 +311,24 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
-                    self.coords_blocks["block_3"][str(count)][0] = x
-                    self.coords_blocks["block_3"][str(count)][1] = y
-                    self._square_item(yellow, light_line, dark_line, (x, y))
+                    # self.coords_blocks["block_3"][str(count)][0] = x
+                    # self.coords_blocks["block_3"][str(count)][1] = y
+                    if not next_figure:
+                        self.coords_blocks[f"{count}yellow"] = [x, y]
+                    self._square_item("yellow", (x, y))
 
                     y += self.h_cell
 
                 else:
-                    self.coords_blocks["block_3"]["4"][0] = x + self.w_cell
-                    self.coords_blocks["block_3"]["4"][1] = y - self.h_cell
+                    # self.coords_blocks["block_3"]["4"][0] = x + self.w_cell
+                    # self.coords_blocks["block_3"]["4"][1] = y - self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["4yellow"] = [
+                            x + self.w_cell,
+                            y - self.h_cell,
+                        ]
                     self._square_item(
-                        yellow,
-                        light_line,
-                        dark_line,
+                        "yellow",
                         (x + self.w_cell, y - self.h_cell),
                     )
 
@@ -303,31 +341,26 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
-                    self.coords_blocks["block_3"][str(count)][0] = x
-                    self.coords_blocks["block_3"][str(count)][1] = y + self.h_cell
-                    self._square_item(
-                        yellow, light_line, dark_line, (x, y + self.h_cell)
-                    )
+                    self.coords_blocks[f"{count}yellow"] = [x, y + self.h_cell]
+                    # self.coords_blocks["block_3"][str(count)][0] = x
+                    # self.coords_blocks["block_3"][str(count)][1] = y + self.h_cell
+                    self._square_item("yellow", (x, y + self.h_cell))
 
                     x += self.w_cell
 
                 else:
-                    self.coords_blocks["block_3"]["4"][0] = x - self.w_cell
-                    self.coords_blocks["block_3"]["4"][1] = y
+                    # self.coords_blocks["block_3"]["4"][0] = x - self.w_cell
+                    # self.coords_blocks["block_3"]["4"][1] = y
+                    self.coords_blocks["4yellow"] = [x - self.w_cell, y]
                     self._square_item(
-                        yellow,
-                        light_line,
-                        dark_line,
+                        "yellow",
                         (x - self.w_cell, y),
                     )
                 count += 1
 
             pygame.display.update()
 
-    def block_4(self, block_verticle, coord):
-        pink = (175, 0, 175)
-        light_line = (255, 0, 255)
-        dark_line = (95, 0, 95)
+    def block_4(self, block_verticle, coord, next_figure):
 
         count = 1
 
@@ -339,16 +372,20 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
-                    self.coords_blocks["block_4"][str(count)][0] = x + self.w_cell
-                    self.coords_blocks["block_4"][str(count)][1] = y
-                    self._square_item(pink, light_line, dark_line, (x + self.w_cell, y))
+                    if not next_figure:
+                        self.coords_blocks[f"{count}pink"] = [x + self.w_cell, y]
+                    # self.coords_blocks["block_4"][str(count)][0] = x + self.w_cell
+                    # self.coords_blocks["block_4"][str(count)][1] = y
+                    self._square_item("pink", (x + self.w_cell, y))
 
                     y += self.h_cell
 
                 else:
-                    self.coords_blocks["block_4"]["4"][0] = x
-                    self.coords_blocks["block_4"]["4"][1] = y - self.h_cell
-                    self._square_item(pink, light_line, dark_line, (x, y - self.h_cell))
+                    if not next_figure:
+                        self.coords_blocks["4pink"] = [x, y - self.h_cell]
+                    # self.coords_blocks["block_4"]["4"][0] = x
+                    # self.coords_blocks["block_4"]["4"][1] = y - self.h_cell
+                    self._square_item("pink", (x, y - self.h_cell))
 
                 count += 1
 
@@ -359,26 +396,27 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
-                    self.coords_blocks["block_4"][str(count)][0] = x
-                    self.coords_blocks["block_4"][str(count)][1] = y
-                    self._square_item(pink, light_line, dark_line, (x, y))
+                    self.coords_blocks[f"{count}pink"] = [x, y]
+                    # self.coords_blocks["block_4"][str(count)][0] = x
+                    # self.coords_blocks["block_4"][str(count)][1] = y
+                    self._square_item("pink", (x, y))
                     x += self.w_cell
                 else:
-                    self.coords_blocks["block_4"]["4"][0] = x - self.w_cell
-                    self.coords_blocks["block_4"]["4"][1] = y + self.h_cell
-                    self._square_item(
-                        pink, light_line, dark_line, (x - self.w_cell, y + self.h_cell)
-                    )
+                    self.coords_blocks["4pink"] = [
+                        x - self.w_cell,
+                        y + self.h_cell,
+                    ]
+                    # self.coords_blocks["block_4"]["4"][0] = x - self.w_cell
+                    # self.coords_blocks["block_4"]["4"][1] = y + self.h_cell
+                    self._square_item("pink", (x - self.w_cell, y + self.h_cell))
 
                 count += 1
 
             pygame.display.update()
 
     # квадрат
-    def block_5(self, block_verticle, coord):
-        sea_wave = (53, 153, 252)
-        light_line = (169, 212, 255)
-        dark_line = (59, 86, 113)
+    def block_5(self, block_verticle, coord, next_figure):
+
         count = 1
 
         self.current_block["cells_block"] = (2, 2)
@@ -390,27 +428,36 @@ class Blocks:
 
         while count < 5:
             if count == 1:
-                self.coords_blocks["block_5"]["1"][0] = x
-                self.coords_blocks["block_5"]["1"][1] = y
-                self._square_item(sea_wave, light_line, dark_line, (x, y))
+                if not next_figure:
+                    self.coords_blocks["1sea_wave"] = [x, y]
+                # self.coords_blocks["block_5"]["1"][0] = x
+                # self.coords_blocks["block_5"]["1"][1] = y
+                self._square_item("sea_wave", (x, y))
 
             if count == 2:
-                self.coords_blocks["block_5"]["2"][0] = x + self.w_cell
-                self.coords_blocks["block_5"]["2"][1] = y
-                self._square_item(sea_wave, light_line, dark_line, (x + self.w_cell, y))
+                if not next_figure:
+                    self.coords_blocks["2sea_wave"] = [x + self.w_cell, y]
+                # self.coords_blocks["block_5"]["2"][0] = x + self.w_cell
+                # self.coords_blocks["block_5"]["2"][1] = y
+                self._square_item("sea_wave", (x + self.w_cell, y))
 
             if count == 3:
-                self.coords_blocks["block_5"]["3"][0] = x
-                self.coords_blocks["block_5"]["3"][1] = y + self.h_cell
-                self._square_item(sea_wave, light_line, dark_line, (x, y + self.h_cell))
+                if not next_figure:
+                    self.coords_blocks["3sea_wave"] = [x, y + self.h_cell]
+                # self.coords_blocks["block_5"]["3"][0] = x
+                # self.coords_blocks["block_5"]["3"][1] = y + self.h_cell
+                self._square_item("sea_wave", (x, y + self.h_cell))
 
             if count == 4:
-                self.coords_blocks["block_5"]["4"][0] = x + self.w_cell
-                self.coords_blocks["block_5"]["4"][1] = y + self.h_cell
+                if not next_figure:
+                    self.coords_blocks["4sea_wave"] = [
+                        x + self.w_cell,
+                        y + self.h_cell,
+                    ]
+                # self.coords_blocks["block_5"]["4"][0] = x + self.w_cell
+                # self.coords_blocks["block_5"]["4"][1] = y + self.h_cell
                 self._square_item(
-                    sea_wave,
-                    light_line,
-                    dark_line,
+                    "sea_wave",
                     (x + self.w_cell, y + self.h_cell),
                 )
 
@@ -418,38 +465,8 @@ class Blocks:
 
         pygame.display.update()
 
-        # else:
-        #     while count < 5:
+    def block_6(self, block_verticle, coord, next_figure):
 
-        #         if count == 1:
-        #             self._square_item(sea_wave, light_line, dark_line, (x, y))
-
-        #         if count == 2:
-        #             self._square_item(
-        #                 sea_wave, light_line, dark_line, (x, y + self.h_cell)
-        #             )
-
-        #         if count == 3:
-        #             self._square_item(
-        #                 sea_wave, light_line, dark_line, (x + self.w_cell, y)
-        #             )
-
-        #         if count == 4:
-        #             self._square_item(
-        #                 sea_wave,
-        #                 light_line,
-        #                 dark_line,
-        #                 (x + self.w_cell, y + self.h_cell),
-        #             )
-
-        #         pygame.display.update()
-
-        #         count += 1
-
-    def block_6(self, block_verticle, coord):
-        gray = (164, 171, 187)
-        light_gray = (255, 255, 255)
-        dark_gray = (132, 132, 132)
         count = 1
 
         x = coord[0]
@@ -460,31 +477,41 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["block_6"]["1"][0] = x
-                    self.coords_blocks["block_6"]["1"][1] = y + self.h_cell
-                    self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
+                    # self.coords_blocks["block_6"]["1"][0] = x
+                    # self.coords_blocks["block_6"]["1"][1] = y + self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["1gray"] = [x, y + self.h_cell]
+                    self._square_item("gray", (x, y + self.h_cell))
 
                 if count == 2:
-                    self.coords_blocks["block_6"]["2"][0] = x + self.w_cell
-                    self.coords_blocks["block_6"]["2"][1] = y + self.h_cell
-                    self._square_item(
-                        gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
-                    )
+                    if not next_figure:
+                        self.coords_blocks["2gray"] = [
+                            x + self.w_cell,
+                            y + self.h_cell,
+                        ]
+                    # self.coords_blocks["block_6"]["2"][0] = x + self.w_cell
+                    # self.coords_blocks["block_6"]["2"][1] = y + self.h_cell
+                    self._square_item("gray", (x + self.w_cell, y + self.h_cell))
 
                 if count == 3:
-                    self.coords_blocks["block_6"]["3"][0] = x + self.w_cell * 2
-                    self.coords_blocks["block_6"]["3"][1] = y + self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["3gray"] = [
+                            x + self.w_cell * 2,
+                            y + self.h_cell,
+                        ]
+                    # self.coords_blocks["block_6"]["3"][0] = x + self.w_cell * 2
+                    # self.coords_blocks["block_6"]["3"][1] = y + self.h_cell
                     self._square_item(
-                        gray,
-                        light_gray,
-                        dark_gray,
+                        "gray",
                         (x + self.w_cell * 2, y + self.h_cell),
                     )
 
                 if count == 4:
-                    self.coords_blocks["block_6"]["4"][0] = x + self.w_cell
-                    self.coords_blocks["block_6"]["4"][1] = y
-                    self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
+                    # self.coords_blocks["block_6"]["4"][0] = x + self.w_cell
+                    # self.coords_blocks["block_6"]["4"][1] = y
+                    if not next_figure:
+                        self.coords_blocks["4gray"] = [x + self.w_cell, y]
+                    self._square_item("gray", (x + self.w_cell, y))
 
                 count += 1
 
@@ -495,37 +522,41 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["block_6"]["1"][0] = x + self.w_cell
-                    self.coords_blocks["block_6"]["1"][1] = y
-                    self._square_item(gray, light_gray, dark_gray, (x + self.w_cell, y))
+                    self.coords_blocks["1gray"] = [x + self.w_cell, y]
+                    # self.coords_blocks["block_6"]["1"][0] = x + self.w_cell
+                    # self.coords_blocks["block_6"]["1"][1] = y
+                    self._square_item("gray", (x + self.w_cell, y))
                 if count == 2:
-                    self.coords_blocks["block_6"]["2"][0] = x + self.w_cell
-                    self.coords_blocks["block_6"]["2"][1] = y + self.h_cell
-                    self._square_item(
-                        gray, light_gray, dark_gray, (x + self.w_cell, y + self.h_cell)
-                    )
+                    self.coords_blocks["2gray"] = [
+                        x + self.w_cell,
+                        y + self.h_cell,
+                    ]
+                    # self.coords_blocks["block_6"]["2"][0] = x + self.w_cell
+                    # self.coords_blocks["block_6"]["2"][1] = y + self.h_cell
+                    self._square_item("gray", (x + self.w_cell, y + self.h_cell))
                 if count == 3:
-                    self.coords_blocks["block_6"]["3"][0] = x + self.w_cell
-                    self.coords_blocks["block_6"]["3"][1] = y + self.h_cell * 2
+                    self.coords_blocks["3gray"] = [
+                        x + self.w_cell,
+                        y + self.h_cell * 2,
+                    ]
+                    # self.coords_blocks["block_6"]["3"][0] = x + self.w_cell
+                    # self.coords_blocks["block_6"]["3"][1] = y + self.h_cell * 2
                     self._square_item(
-                        gray,
-                        light_gray,
-                        dark_gray,
+                        "gray",
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
                 if count == 4:
-                    self.coords_blocks["block_6"]["4"][0] = x
-                    self.coords_blocks["block_6"]["4"][1] = y + self.h_cell
-                    self._square_item(gray, light_gray, dark_gray, (x, y + self.h_cell))
+                    self.coords_blocks["4gray"] = [x, y + self.h_cell]
+                    # self.coords_blocks["block_6"]["4"][0] = x
+                    # self.coords_blocks["block_6"]["4"][1] = y + self.h_cell
+                    self._square_item("gray", (x, y + self.h_cell))
 
                 count += 1
 
             pygame.display.update()
 
-    def block_7(self, block_verticle, coord):
-        green = (0, 175, 0)
-        light_line = (125, 255, 125)
-        dark_line = (0, 92, 0)
+    def block_7(self, block_verticle, coord, next_figure):
+
         count = 1
         x = coord[0]
         y = coord[1]
@@ -535,28 +566,39 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["block_7"]["1"][0] = x
-                    self.coords_blocks["block_7"]["1"][1] = y
-                    self._square_item(green, light_line, dark_line, (x, y))
+                    if not next_figure:
+                        self.coords_blocks["1green"] = [x, y]
+                    # self.coords_blocks["block_7"]["1"][0] = x
+                    # self.coords_blocks["block_7"]["1"][1] = y
+                    self._square_item("green", (x, y))
                 if count == 2:
-                    self.coords_blocks["block_7"]["2"][0] = x + self.w_cell
-                    self.coords_blocks["block_7"]["2"][1] = y
-                    self._square_item(
-                        green, light_line, dark_line, (x + self.w_cell, y)
-                    )
+                    if not next_figure:
+                        self.coords_blocks["2green"] = [x + self.w_cell, y]
+                    # self.coords_blocks["block_7"]["2"][0] = x + self.w_cell
+                    # self.coords_blocks["block_7"]["2"][1] = y
+                    self._square_item("green", (x + self.w_cell, y))
                 if count == 3:
-                    self.coords_blocks["block_7"]["3"][0] = x + self.w_cell
-                    self.coords_blocks["block_7"]["3"][1] = y + self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["3green"] = [
+                            x + self.w_cell,
+                            y + self.h_cell,
+                        ]
+                    # self.coords_blocks["block_7"]["3"][0] = x + self.w_cell
+                    # self.coords_blocks["block_7"]["3"][1] = y + self.h_cell
                     self._square_item(
-                        green, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                        "green",
+                        (x + self.w_cell, y + self.h_cell),
                     )
                 if count == 4:
-                    self.coords_blocks["block_7"]["4"][0] = x + self.w_cell * 2
-                    self.coords_blocks["block_7"]["4"][1] = y + self.h_cell
+                    if not next_figure:
+                        self.coords_blocks["4green"] = [
+                            x + self.w_cell * 2,
+                            y + self.h_cell,
+                        ]
+                    # self.coords_blocks["block_7"]["4"][0] = x + self.w_cell * 2
+                    # self.coords_blocks["block_7"]["4"][1] = y + self.h_cell
                     self._square_item(
-                        green,
-                        light_line,
-                        dark_line,
+                        "green",
                         (x + self.w_cell * 2, y + self.h_cell),
                     )
 
@@ -569,28 +611,35 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["block_7"]["1"][0] = x
-                    self.coords_blocks["block_7"]["1"][1] = y
-                    self._square_item(green, light_line, dark_line, (x, y))
+                    self.coords_blocks["1green"] = [x, y]
+                    # self.coords_blocks["block_7"]["1"][0] = x
+                    # self.coords_blocks["block_7"]["1"][1] = y
+                    self._square_item("green", (x, y))
                 if count == 2:
-                    self.coords_blocks["block_7"]["2"][0] = x
-                    self.coords_blocks["block_7"]["2"][1] = y + self.h_cell
-                    self._square_item(
-                        green, light_line, dark_line, (x, y + self.h_cell)
-                    )
+                    self.coords_blocks["2green"] = [x, y + self.h_cell]
+                    # self.coords_blocks["block_7"]["2"][0] = x
+                    # self.coords_blocks["block_7"]["2"][1] = y + self.h_cell
+                    self._square_item("green", (x, y + self.h_cell))
                 if count == 3:
-                    self.coords_blocks["block_7"]["3"][0] = x + self.w_cell
-                    self.coords_blocks["block_7"]["3"][1] = y + self.h_cell
+                    self.coords_blocks["3green"] = [
+                        x + self.w_cell,
+                        y + self.h_cell,
+                    ]
+                    # self.coords_blocks["block_7"]["3"][0] = x + self.w_cell
+                    # self.coords_blocks["block_7"]["3"][1] = y + self.h_cell
                     self._square_item(
-                        green, light_line, dark_line, (x + self.w_cell, y + self.h_cell)
+                        "green",
+                        (x + self.w_cell, y + self.h_cell),
                     )
                 if count == 4:
-                    self.coords_blocks["block_7"]["4"][0] = x + self.w_cell
-                    self.coords_blocks["block_7"]["4"][1] = y + self.h_cell * 2
+                    self.coords_blocks["4green"] = [
+                        x + self.w_cell,
+                        y + self.h_cell * 2,
+                    ]
+                    # self.coords_blocks["block_7"]["4"][0] = x + self.w_cell
+                    # self.coords_blocks["block_7"]["4"][1] = y + self.h_cell * 2
                     self._square_item(
-                        green,
-                        light_line,
-                        dark_line,
+                        "green",
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
 
