@@ -72,7 +72,6 @@ class Tetris:
                 # таймер
                 if event.type == self.USEREVENT and not bool(self.key_button):
                     # * отрисовка блоков ===============================================
-                    print(self.figurs)
                     self.blocks.next_image(self.num_next_block, True)
 
                     self.blocks.create_block(
@@ -108,14 +107,18 @@ class Tetris:
                         # pygame.time.set_timer(self.USEREVENT, 0)
 
                         # self.current_block["is_current"] = False
-                        print(self.coords_blocks)
+                        # print(self.coords_blocks)
 
                         if len(self.coords_blocks) > 0:
                             for key, coord in self.coords_blocks.items():
-                                print(key)
+                                # print(key)
 
                                 # TODO сделать чтобы в figurs добавлялась [x, y, color]
+                                self.figurs.append(key)
                                 self.figurs.append(coord)
+                                print(self.figurs)
+                                # self.figurs.append()
+                                # print(self.figurs)
 
                         self.current_block["coord"][1] = self.y_start_area
 

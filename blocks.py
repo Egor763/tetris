@@ -157,7 +157,6 @@ class Blocks:
         )
 
     def block_1(self, block_verticle, coord, next_figure):
-
         count = 1
 
         x = coord[0]
