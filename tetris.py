@@ -1,4 +1,5 @@
 import pygame
+import random
 from screen import Screen
 from blocks import Blocks
 from move_blocks import MoveBlocks
@@ -11,7 +12,7 @@ class Tetris:
 
         self.screen_class = Screen()
         self.screen = self.screen_class.screen_game()
-        self.blocks = Blocks(self.screen)
+        self.blocks = Blocks(self.screen_class)
         self.move_blocks = MoveBlocks()
         self.x_start_area = settings.x_start_area
         self.x_end_area = settings.x_end_area
@@ -24,7 +25,7 @@ class Tetris:
 
         self.current_block = settings.current_block
 
-        self.figurs = settings.figurs
+        # self.figurs = settings.figurs
 
         self.screen_class.handle_state_data()
 
@@ -38,23 +39,13 @@ class Tetris:
 
         self.clock = pygame.time.Clock()
 
-        # self.current_block["coord"][1] = 10
+        # self.current_block["num"] = random.randrange(1, 8)
+        self.num_next_block = random.randrange(1, 8)
 
-        # print(self.blocks.)
+        self.current_block["num"] = 1
 
-        # self.current_block["num"] = self.blocks.random_num()
-        self.current_block["num"] = self.blocks.random_num()
-        # self.current_block["is_current"] = True
-        self.num_next_block = self.blocks.random_num()
-
-        self.blocks.create_block(
-            self.current_block["position"],
-            self.current_block["coord"],
-            self.current_block["num"],
-            False,
-        )
-
-        self.blocks.next_image(self.num_next_block, True)
+        # отрисовка квадратов
+        self.blocks.draw_figurs(self.num_next_block)
 
         pygame.display.update()
 
@@ -71,63 +62,19 @@ class Tetris:
 
                 # таймер
                 if event.type == self.USEREVENT and not bool(self.key_button):
-                    # * отрисовка блоков ===============================================
-                    self.blocks.next_image(self.num_next_block, True)
+                    # TODO первый блок смещается на клетку вправо
+                    # отрисовка квадратов
+                    self.blocks.draw_figurs(self.num_next_block)
 
-                    self.blocks.create_block(
-                        self.current_block["position"],
-                        self.current_block["coord"],
-                        self.current_block["num"],
-                        False,
+                    self.move_blocks.move_down_block(
+                        self.current_block, self.coords_blocks, self.num_next_block
                     )
-                    # if len(self.figurs) > 0:
-                    #     for i in self.figurs.values():
-                    #         print(i["coord"])
-                    #         self.blocks.create_block(i["position"], i["coord"], i["num"])
-                    # ===========================================================
-
-                    if (
-                        self.current_block["coord"][1]
-                        + self.h_cell * self.current_block["cells_block"][1]
-                        < self.y_end_area
-                        # and self.current_block["is_current"]
-                    ):
-
-                        self.current_block["coord"][1] = self.move_blocks.change_coord(
-                            self.current_block["coord"][1]
-                        )
-
-                    elif (
-                        self.current_block["coord"][1]
-                        + self.h_cell * self.current_block["cells_block"][1]
-                        == self.y_end_area
-                        # and self.current_block["is_current"]
-                        # and self.current_block["is_current"]
-                    ):
-                        # pygame.time.set_timer(self.USEREVENT, 0)
-
-                        # self.current_block["is_current"] = False
-                        # print(self.coords_blocks)
-
-                        if len(self.coords_blocks) > 0:
-                            for key, coord in self.coords_blocks.items():
-                                # print(key)
-
-                                # TODO сделать чтобы в figurs добавлялась [x, y, color]
-                                self.figurs.append(key)
-                                self.figurs.append(coord)
-                                print(self.figurs)
-                                # self.figurs.append()
-                                # print(self.figurs)
-
-                        self.current_block["coord"][1] = self.y_start_area
-
-                        # pygame.time.set_timer(self.USEREVENT, 500)
-
-                        self.current_block["num"] = self.num_next_block
-                        self.num_next_block = self.blocks.random_num()
 
                 if event.type == pygame.KEYDOWN:
+                    # ! закрытие окна на escape
+                    if event.key == pygame.K_ESCAPE:
+                        exit()
+
                     if event.key == pygame.K_KP5:
                         if self.current_block["position"]:
                             self.current_block["position"] = False
@@ -142,21 +89,29 @@ class Tetris:
                             False,
                         )
 
-                    if (
-                        event.key == pygame.K_LEFT
-                        and self.x_start_area < self.current_block["coord"][0]
-                    ):
-                        self.blocks.next_image(self.num_next_block)
-
-                        pygame.time.set_timer(self.USEREVENT, 0)
-
+                    if event.key == pygame.K_LEFT:
                         self.key_button = "left"
-                        self.current_block["coord"][0] -= self.w_cell
-                        self.blocks.create_block(
-                            self.current_block["position"],
-                            self.current_block["coord"],
-                            self.current_block["num"],
-                        )
+                        pygame.time.set_timer(self.USEREVENT, 0)
+                        if (
+                            self.x_start_area < self.current_block["coord"][0]
+                            and self.current_block["num"] != 1
+                        ):
+                            self.current_block["coord"][0] -= self.w_cell
+                            print("n: ", self.current_block["num"])
+                            # отрисовка квадратов
+                            self.blocks.draw_figurs(self.num_next_block)
+
+                        elif (
+                            self.x_start_area - self.w_cell
+                            < self.current_block["coord"][0]
+                            and self.current_block["num"] == 1
+                            and self.current_block["position"]
+                        ):
+                            print("l")
+                            self.current_block["coord"][0] -= self.w_cell
+
+                            # отрисовка квадратов
+                            self.blocks.draw_figurs(self.num_next_block)
 
                     if (
                         event.key == pygame.K_RIGHT
@@ -164,21 +119,12 @@ class Tetris:
                         > self.current_block["coord"][0]
                         + self.w_cell * self.current_block["cells_block"][0]
                     ):
-                        self.blocks.next_image(self.num_next_block)
-
-                        pygame.time.set_timer(self.USEREVENT, 0)
                         self.key_button = "right"
+                        pygame.time.set_timer(self.USEREVENT, 0)
                         self.current_block["coord"][0] += self.w_cell
-                        self.blocks.create_block(
-                            self.current_block["position"],
-                            self.current_block["coord"],
-                            self.current_block["num"],
-                            False,
-                        )
 
-                    # ! закрытие окна на escape
-                    if event.key == pygame.K_ESCAPE:
-                        exit()
+                        # отрисовка квадратов
+                        self.blocks.draw_figurs(self.num_next_block)
 
                     if event.key == pygame.K_DOWN:
                         self.current_block["coord"][1] = (
@@ -186,7 +132,7 @@ class Tetris:
                             - self.h_cell * self.current_block["cells_block"][1]
                         )
 
-                        self.num_next_block = self.blocks.random_num()
+                        self.num_next_block = random.randrange(1, 8)
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
@@ -199,27 +145,7 @@ class Tetris:
 
                         self.key_button = ""
 
-            # if (
-            #     self.current_block["coord"][1]
-            #     + self.h_cell * self.current_block["cells_block"][1]
-            #     - self.h_cell
-            #     == self.y_end_area
-            #     # and self.current_block["is_current"]
-            # ):
-            #     # pygame.time.set_timer(self.USEREVENT, 0)
-
-            #     # self.current_block["is_current"] = False
-
-            #     self.current_block["coord"][1] = self.y_start_area
-
-            #     # pygame.time.set_timer(self.USEREVENT, 500)
-
-            #     self.current_block["num"] = self.num_next_block
-            #     self.num_next_block = self.blocks.random_num()
-
             self.clock.tick(200)
-
-            # pygame.display.update()
 
 
 if __name__ == "__main__":

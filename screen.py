@@ -29,6 +29,7 @@ class Screen:
         self.y_end_area = settings.y_end_area
         self.w_cell = settings.w_cell
         self.h_cell = settings.h_cell
+        self.border_width = 1
 
         pygame.display.set_caption("Тетрис")
 
@@ -111,4 +112,77 @@ class Screen:
             (self.vert_line_x_right, self.y_start_area),
             (self.vert_line_x_right, self.y_end_area),
             2,
+        )
+
+    def square_item(self, square_color, coord):
+        if square_color == "red":
+            color = (255, 0, 0)
+            color_light = (151, 151, 255)
+            color_dark = (0, 0, 130)
+        elif square_color == "blue":
+            color = (0, 0, 255)
+            color_light = (255, 142, 142)
+            color_dark = (119, 0, 0)
+        elif square_color == "yellow":
+            color = (255, 255, 0)
+            color_light = (255, 237, 157)
+            color_dark = (110, 96, 32)
+        elif square_color == "pink":
+            color = (175, 0, 175)
+            color_light = (255, 0, 255)
+            color_dark = (95, 0, 95)
+        elif square_color == "sea_wave":
+            color = (53, 153, 252)
+            color_light = (169, 212, 255)
+            color_dark = (59, 86, 113)
+        elif square_color == "gray":
+            color = (164, 171, 187)
+            color_light = (255, 255, 255)
+            color_dark = (132, 132, 132)
+        elif square_color == "green":
+            color = (0, 175, 0)
+            color_light = (125, 255, 125)
+            color_dark = (0, 92, 0)
+
+        size_rect = 29
+        x = coord[0]
+        y = coord[1]
+
+        pygame.draw.rect(
+            self.screen,
+            color,
+            (x + 1, y + 1, self.w_cell - 2, self.h_cell - 2),
+        )
+
+        # низ
+        pygame.draw.line(
+            self.screen,
+            color_dark,
+            (x, y + size_rect),
+            (x + size_rect, y + size_rect),
+            self.border_width,
+        )
+        # левая
+        pygame.draw.line(
+            self.screen,
+            color_light,
+            (x, y),
+            (x, y + size_rect),
+            self.border_width,
+        )
+        # правая
+        pygame.draw.line(
+            self.screen,
+            color_dark,
+            (x + size_rect, y),
+            (x + size_rect, y + size_rect),
+            self.border_width,
+        )
+        # верх
+        pygame.draw.line(
+            self.screen,
+            color_light,
+            (x, y),
+            (x + size_rect, y),
+            self.border_width,
         )
