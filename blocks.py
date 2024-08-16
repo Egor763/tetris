@@ -67,7 +67,7 @@ class Blocks:
         print(x)
 
         if block_verticle:
-            self.current_block["cells_block"] = (1, 4)
+            self.current_block["cells_block"] = (1, 4, 4)
             while count < 5:
                 if not next_figure:
                     self.coords_blocks[f"{count}red"] = [x + self.w_cell, y]
@@ -79,7 +79,7 @@ class Blocks:
             pygame.display.update()
 
         else:
-            self.current_block["cells_block"] = (4, 1)
+            self.current_block["cells_block"] = (4, 1, 4)
 
             while count < 5:
                 self.coords_blocks[f"{count}red"] = [x, y]
@@ -97,7 +97,7 @@ class Blocks:
         y = coord[1]
 
         if block_verticle:
-            self.current_block["cells_block"] = (3, 2)
+            self.current_block["cells_block"] = (3, 2, 3)
 
             while count < 5:
                 if count == 1:
@@ -142,7 +142,7 @@ class Blocks:
             pygame.display.update()
 
         else:
-            self.current_block["cells_block"] = (2, 3)
+            self.current_block["cells_block"] = (2, 3, 3)
 
             while count < 5:
                 if count == 1:
@@ -180,7 +180,7 @@ class Blocks:
         y = coord[1]
 
         if block_verticle:
-            self.current_block["cells_block"] = (2, 3)
+            self.current_block["cells_block"] = (2, 3, 3)
 
             while count < 5:
                 if count != 4:
@@ -205,7 +205,7 @@ class Blocks:
             pygame.display.update()
 
         else:
-            self.current_block["cells_block"] = (3, 2)
+            self.current_block["cells_block"] = (3, 2, 3)
 
             while count < 5:
                 if count != 4:
@@ -230,7 +230,7 @@ class Blocks:
         y = coord[1]
 
         if block_verticle:
-            self.current_block["cells_block"] = (2, 3)
+            self.current_block["cells_block"] = (2, 3, 3)
 
             while count < 5:
                 if count != 4:
@@ -249,7 +249,7 @@ class Blocks:
 
             pygame.display.update()
         else:
-            self.current_block["cells_block"] = (3, 2)
+            self.current_block["cells_block"] = (3, 2, 3)
 
             while count < 5:
                 if count != 4:
@@ -274,7 +274,7 @@ class Blocks:
 
         count = 1
 
-        self.current_block["cells_block"] = (2, 2)
+        self.current_block["cells_block"] = (2, 2, 2)
 
         x = coord[0]
         y = coord[1]
@@ -318,7 +318,7 @@ class Blocks:
         y = coord[1]
 
         if block_verticle:
-            self.current_block["cells_block"] = (3, 2)
+            self.current_block["cells_block"] = (3, 2, 3)
 
             while count < 5:
                 if count == 1:
@@ -357,7 +357,7 @@ class Blocks:
             pygame.display.update()
 
         else:
-            self.current_block["cells_block"] = (2, 3)
+            self.current_block["cells_block"] = (2, 3, 3)
 
             while count < 5:
                 if count == 1:
@@ -394,7 +394,7 @@ class Blocks:
         y = coord[1]
 
         if block_verticle:
-            self.current_block["cells_block"] = (3, 2)
+            self.current_block["cells_block"] = (3, 2, 3)
 
             while count < 5:
                 if count == 1:
@@ -431,7 +431,7 @@ class Blocks:
             pygame.display.update()
 
         else:
-            self.current_block["cells_block"] = (2, 3)
+            self.current_block["cells_block"] = (2, 3, 3)
 
             while count < 5:
                 if count == 1:
@@ -476,6 +476,7 @@ class Blocks:
         self.create_block(
             self.current_block["position"],
             self.current_block["coord"],
+            # self.current_block["num"],
             1,
             False,
         )

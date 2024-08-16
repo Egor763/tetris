@@ -21,6 +21,7 @@ num_next_block = 0
 
 key_button = ""
 
+
 coords_blocks = {}
 
 

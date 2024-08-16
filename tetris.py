@@ -25,8 +25,6 @@ class Tetris:
 
         self.current_block = settings.current_block
 
-        # self.figurs = settings.figurs
-
         self.screen_class.handle_state_data()
 
         self.USEREVENT = pygame.USEREVENT
@@ -43,6 +41,7 @@ class Tetris:
         self.num_next_block = random.randrange(1, 8)
 
         self.current_block["num"] = 1
+        # self.current_block["num"] = random.randrange(1, 8)
 
         # отрисовка квадратов
         self.blocks.draw_figurs(self.num_next_block)
@@ -76,11 +75,27 @@ class Tetris:
                         exit()
 
                     if event.key == pygame.K_KP5:
-                        if self.current_block["position"]:
-                            self.current_block["position"] = False
+                        # if self.current_block["position"]:
+                        #     self.current_block["position"] = False
+                        # else:
+                        #     self.current_block["position"] = True
 
-                        else:
-                            self.current_block["position"] = True
+                        # =======
+                        if (
+                            self.current_block["coord"][0]
+                            + self.w_cell * self.current_block["cells_block"][2]
+                            <= self.x_end_area
+                            and self.current_block["coord"][0] - self.w_cell
+                            >= self.x_start_area
+                            and self.current_block["coord"][1]
+                            + self.h_cell * self.current_block["cells_block"][2]
+                            <= self.y_end_area
+                        ):
+                            print(self.current_block["cells_block"][0])
+                            if self.current_block["position"]:
+                                self.current_block["position"] = False
+                            else:
+                                self.current_block["position"] = True
 
                         self.blocks.create_block(
                             self.current_block["position"],
@@ -89,12 +104,17 @@ class Tetris:
                             False,
                         )
 
+                        self.blocks.next_image(self.current_block["num"], False)
+
                     if event.key == pygame.K_LEFT:
                         self.key_button = "left"
                         pygame.time.set_timer(self.USEREVENT, 0)
                         if (
                             self.x_start_area < self.current_block["coord"][0]
                             and self.current_block["num"] != 1
+                            or not self.current_block["position"]
+                            and self.current_block["num"] == 1
+                            and self.x_start_area < self.current_block["coord"][0]
                         ):
                             self.current_block["coord"][0] -= self.w_cell
                             print("n: ", self.current_block["num"])
@@ -113,18 +133,37 @@ class Tetris:
                             # отрисовка квадратов
                             self.blocks.draw_figurs(self.num_next_block)
 
-                    if (
-                        event.key == pygame.K_RIGHT
-                        and self.x_end_area
-                        > self.current_block["coord"][0]
-                        + self.w_cell * self.current_block["cells_block"][0]
-                    ):
+                    if event.key == pygame.K_RIGHT:
                         self.key_button = "right"
                         pygame.time.set_timer(self.USEREVENT, 0)
-                        self.current_block["coord"][0] += self.w_cell
 
                         # отрисовка квадратов
-                        self.blocks.draw_figurs(self.num_next_block)
+
+                        if (
+                            self.x_end_area
+                            - self.current_block["cells_block"][0] * self.w_cell
+                            > self.current_block["coord"][0]
+                            and self.current_block["num"] != 1
+                        ) or (
+                            not self.current_block["position"]
+                            and self.current_block["num"] == 1
+                            and self.x_end_area
+                            - self.current_block["cells_block"][0] * self.w_cell
+                            > self.current_block["coord"][0]
+                        ):
+                            print("yn")
+                            self.current_block["coord"][0] += self.w_cell
+                            self.blocks.draw_figurs(self.num_next_block)
+
+                        elif (
+                            self.x_end_area - self.w_cell * 2
+                            > self.current_block["coord"][0]
+                            and self.current_block["num"] == 1
+                            and self.current_block["position"]
+                        ):
+                            print("y")
+                            self.current_block["coord"][0] += self.w_cell
+                            self.blocks.draw_figurs(self.num_next_block)
 
                     if event.key == pygame.K_DOWN:
                         self.current_block["coord"][1] = (
