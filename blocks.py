@@ -1,6 +1,7 @@
 import pygame
 
 import settings
+from move_blocks import MoveBlocks
 
 
 class Blocks:
@@ -8,6 +9,8 @@ class Blocks:
         pygame.init()
 
         self.screen_class = screen_class
+
+        self.move_blocks = MoveBlocks()
 
         self.screen = self.screen_class.screen_game()
 
@@ -64,13 +67,11 @@ class Blocks:
         x = coord[0]
         y = coord[1]
 
-        print(x)
-
         if block_verticle:
             self.current_block["cells_block"] = (1, 4, 4)
             while count < 5:
                 if not next_figure:
-                    self.coords_blocks[f"{count}red"] = [x + self.w_cell, y]
+                    self.coords_blocks[f"{count}"] = [x + self.w_cell, y, "red"]
                 self.screen_class.square_item("red", (x + self.w_cell, y))
                 y += self.h_cell
 
@@ -82,7 +83,7 @@ class Blocks:
             self.current_block["cells_block"] = (4, 1, 4)
 
             while count < 5:
-                self.coords_blocks[f"{count}red"] = [x, y]
+                self.coords_blocks[f"{count}"] = [x, y, "red"]
                 self.screen_class.square_item("red", (x, y))
                 x += self.w_cell
 
@@ -102,16 +103,17 @@ class Blocks:
             while count < 5:
                 if count == 1:
                     if not next_figure:
-                        self.coords_blocks["1blue"] = [x, y + self.h_cell]
+                        self.coords_blocks["1"] = [x, y + self.h_cell, "blue"]
                     self.screen_class.square_item(
                         "blue",
                         (x, y + self.h_cell),
                     )
                 if count == 2:
                     if not next_figure:
-                        self.coords_blocks["2blue"] = [
+                        self.coords_blocks["2"] = [
                             x + self.w_cell,
                             y + self.h_cell,
+                            "blue",
                         ]
                     self.screen_class.square_item(
                         "blue",
@@ -120,7 +122,7 @@ class Blocks:
 
                 if count == 3:
                     if not next_figure:
-                        self.coords_blocks["3blue"] = [x + self.w_cell, y]
+                        self.coords_blocks["3"] = [x + self.w_cell, y, "blue"]
                     self.screen_class.square_item(
                         "blue",
                         (x + self.w_cell, y),
@@ -128,10 +130,7 @@ class Blocks:
 
                 if count == 4:
                     if not next_figure:
-                        self.coords_blocks["4blue"] = [
-                            x + self.w_cell * 2,
-                            y,
-                        ]
+                        self.coords_blocks["4"] = [x + self.w_cell * 2, y, "blue"]
                     self.screen_class.square_item(
                         "blue",
                         (x + self.w_cell * 2, y),
@@ -146,24 +145,22 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["1blue"] = [x, y]
+                    self.coords_blocks["1"] = [x, y, "blue"]
                     self.screen_class.square_item("blue", (x, y))
                 if count == 2:
-                    self.coords_blocks["2blue"] = [x, y + self.h_cell]
+                    self.coords_blocks["2"] = [x, y + self.h_cell, "blue"]
                     self.screen_class.square_item("blue", (x, y + self.h_cell))
                 if count == 3:
-                    self.coords_blocks["3blue"] = [
-                        x + self.w_cell,
-                        y + self.h_cell,
-                    ]
+                    self.coords_blocks["3"] = [x + self.w_cell, y + self.h_cell, "blue"]
                     self.screen_class.square_item(
                         "blue",
                         (x + self.w_cell, y + self.h_cell),
                     )
                 if count == 4:
-                    self.coords_blocks["4blue"] = [
+                    self.coords_blocks["4"] = [
                         x + self.w_cell,
                         y + self.h_cell * 2,
+                        "blue",
                     ]
                     self.screen_class.square_item(
                         "blue",
@@ -185,15 +182,16 @@ class Blocks:
             while count < 5:
                 if count != 4:
                     if not next_figure:
-                        self.coords_blocks[f"{count}yellow"] = [x, y]
+                        self.coords_blocks[f"{count}"] = [x, y, "yellow"]
                     self.screen_class.square_item("yellow", (x, y))
 
                     y += self.h_cell
                 else:
                     if not next_figure:
-                        self.coords_blocks["4yellow"] = [
+                        self.coords_blocks["4"] = [
                             x + self.w_cell,
                             y - self.h_cell,
+                            "yellow",
                         ]
                     self.screen_class.square_item(
                         "yellow",
@@ -209,13 +207,13 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
-                    self.coords_blocks[f"{count}yellow"] = [x, y + self.h_cell]
+                    self.coords_blocks[f"{count}"] = [x, y + self.h_cell, "yellow"]
                     self.screen_class.square_item("yellow", (x, y + self.h_cell))
 
                     x += self.w_cell
 
                 else:
-                    self.coords_blocks["4yellow"] = [x - self.w_cell, y]
+                    self.coords_blocks["4"] = [x - self.w_cell, y, "yellow"]
                     self.screen_class.square_item(
                         "yellow",
                         (x - self.w_cell, y),
@@ -235,14 +233,14 @@ class Blocks:
             while count < 5:
                 if count != 4:
                     if not next_figure:
-                        self.coords_blocks[f"{count}pink"] = [x + self.w_cell, y]
+                        self.coords_blocks[f"{count}"] = [x + self.w_cell, y, "pink"]
                     self.screen_class.square_item("pink", (x + self.w_cell, y))
 
                     y += self.h_cell
 
                 else:
                     if not next_figure:
-                        self.coords_blocks["4pink"] = [x, y - self.h_cell]
+                        self.coords_blocks["4"] = [x, y - self.h_cell, "pink"]
                     self.screen_class.square_item("pink", (x, y - self.h_cell))
 
                 count += 1
@@ -253,14 +251,11 @@ class Blocks:
 
             while count < 5:
                 if count != 4:
-                    self.coords_blocks[f"{count}pink"] = [x, y]
+                    self.coords_blocks[f"{count}"] = [x, y, "pink"]
                     self.screen_class.square_item("pink", (x, y))
                     x += self.w_cell
                 else:
-                    self.coords_blocks["4pink"] = [
-                        x - self.w_cell,
-                        y + self.h_cell,
-                    ]
+                    self.coords_blocks["4"] = [x - self.w_cell, y + self.h_cell, "pink"]
                     self.screen_class.square_item(
                         "pink", (x - self.w_cell, y + self.h_cell)
                     )
@@ -282,24 +277,25 @@ class Blocks:
         while count < 5:
             if count == 1:
                 if not next_figure:
-                    self.coords_blocks["1sea_wave"] = [x, y]
+                    self.coords_blocks["1"] = [x, y, "sea_wave"]
                 self.screen_class.square_item("sea_wave", (x, y))
 
             if count == 2:
                 if not next_figure:
-                    self.coords_blocks["2sea_wave"] = [x + self.w_cell, y]
+                    self.coords_blocks["2"] = [x + self.w_cell, y, "sea_wave"]
                 self.screen_class.square_item("sea_wave", (x + self.w_cell, y))
 
             if count == 3:
                 if not next_figure:
-                    self.coords_blocks["3sea_wave"] = [x, y + self.h_cell]
+                    self.coords_blocks["3"] = [x, y + self.h_cell, "sea_wave"]
                 self.screen_class.square_item("sea_wave", (x, y + self.h_cell))
 
             if count == 4:
                 if not next_figure:
-                    self.coords_blocks["4sea_wave"] = [
+                    self.coords_blocks["4"] = [
                         x + self.w_cell,
                         y + self.h_cell,
+                        "sea_wave",
                     ]
                 self.screen_class.square_item(
                     "sea_wave",
@@ -323,14 +319,15 @@ class Blocks:
             while count < 5:
                 if count == 1:
                     if not next_figure:
-                        self.coords_blocks["1gray"] = [x, y + self.h_cell]
+                        self.coords_blocks["1"] = [x, y + self.h_cell, "gray"]
                     self.screen_class.square_item("gray", (x, y + self.h_cell))
 
                 if count == 2:
                     if not next_figure:
-                        self.coords_blocks["2gray"] = [
+                        self.coords_blocks["2"] = [
                             x + self.w_cell,
                             y + self.h_cell,
+                            "gray",
                         ]
                     self.screen_class.square_item(
                         "gray", (x + self.w_cell, y + self.h_cell)
@@ -338,9 +335,10 @@ class Blocks:
 
                 if count == 3:
                     if not next_figure:
-                        self.coords_blocks["3gray"] = [
+                        self.coords_blocks["3"] = [
                             x + self.w_cell * 2,
                             y + self.h_cell,
+                            "gray",
                         ]
                     self.screen_class.square_item(
                         "gray",
@@ -349,7 +347,7 @@ class Blocks:
 
                 if count == 4:
                     if not next_figure:
-                        self.coords_blocks["4gray"] = [x + self.w_cell, y]
+                        self.coords_blocks["4"] = [x + self.w_cell, y, "gray"]
                     self.screen_class.square_item("gray", (x + self.w_cell, y))
 
                 count += 1
@@ -361,27 +359,25 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["1gray"] = [x + self.w_cell, y]
+                    self.coords_blocks["1"] = [x + self.w_cell, y, "gray"]
                     self.screen_class.square_item("gray", (x + self.w_cell, y))
                 if count == 2:
-                    self.coords_blocks["2gray"] = [
-                        x + self.w_cell,
-                        y + self.h_cell,
-                    ]
+                    self.coords_blocks["2"] = [x + self.w_cell, y + self.h_cell, "gray"]
                     self.screen_class.square_item(
                         "gray", (x + self.w_cell, y + self.h_cell)
                     )
                 if count == 3:
-                    self.coords_blocks["3gray"] = [
+                    self.coords_blocks["3"] = [
                         x + self.w_cell,
                         y + self.h_cell * 2,
+                        "gray",
                     ]
                     self.screen_class.square_item(
                         "gray",
                         (x + self.w_cell, y + self.h_cell * 2),
                     )
                 if count == 4:
-                    self.coords_blocks["4gray"] = [x, y + self.h_cell]
+                    self.coords_blocks["4"] = [x, y + self.h_cell, "gray"]
                     self.screen_class.square_item("gray", (x, y + self.h_cell))
 
                 count += 1
@@ -399,17 +395,18 @@ class Blocks:
             while count < 5:
                 if count == 1:
                     if not next_figure:
-                        self.coords_blocks["1green"] = [x, y]
+                        self.coords_blocks["1"] = [x, y, "green"]
                     self.screen_class.square_item("green", (x, y))
                 if count == 2:
                     if not next_figure:
-                        self.coords_blocks["2green"] = [x + self.w_cell, y]
+                        self.coords_blocks["2"] = [x + self.w_cell, y, "green"]
                     self.screen_class.square_item("green", (x + self.w_cell, y))
                 if count == 3:
                     if not next_figure:
-                        self.coords_blocks["3green"] = [
+                        self.coords_blocks["3"] = [
                             x + self.w_cell,
                             y + self.h_cell,
+                            "green",
                         ]
                     self.screen_class.square_item(
                         "green",
@@ -417,9 +414,10 @@ class Blocks:
                     )
                 if count == 4:
                     if not next_figure:
-                        self.coords_blocks["4green"] = [
+                        self.coords_blocks["4"] = [
                             x + self.w_cell * 2,
                             y + self.h_cell,
+                            "green",
                         ]
                     self.screen_class.square_item(
                         "green",
@@ -435,24 +433,26 @@ class Blocks:
 
             while count < 5:
                 if count == 1:
-                    self.coords_blocks["1green"] = [x, y]
+                    self.coords_blocks["1"] = [x, y, "green"]
                     self.screen_class.square_item("green", (x, y))
                 if count == 2:
-                    self.coords_blocks["2green"] = [x, y + self.h_cell]
+                    self.coords_blocks["2"] = [x, y + self.h_cell, "green"]
                     self.screen_class.square_item("green", (x, y + self.h_cell))
                 if count == 3:
-                    self.coords_blocks["3green"] = [
+                    self.coords_blocks["3"] = [
                         x + self.w_cell,
                         y + self.h_cell,
+                        "green",
                     ]
                     self.screen_class.square_item(
                         "green",
                         (x + self.w_cell, y + self.h_cell),
                     )
                 if count == 4:
-                    self.coords_blocks["4green"] = [
+                    self.coords_blocks["4"] = [
                         x + self.w_cell,
                         y + self.h_cell * 2,
+                        "green",
                     ]
                     self.screen_class.square_item(
                         "green",
@@ -465,8 +465,9 @@ class Blocks:
 
     def draw_figurs(self, num_next_block):
         # отрисовка сохраненных квадратов
-        for i in self.figurs:
-            self.screen_class.square_item(i[2], (i[0], i[1]))
+        for key, value in self.figurs.items():
+            for i in value:
+                self.screen_class.square_item(i[2], (i[0], i[1]))
 
         # отрисовка следующего блока
         self.next_image(num_next_block, True)
@@ -476,9 +477,6 @@ class Blocks:
         self.create_block(
             self.current_block["position"],
             self.current_block["coord"],
-            # self.current_block["num"],
-            1,
+            self.current_block["num"],
             False,
         )
-
-        print(self.current_block["coord"][0] - self.w_cell)

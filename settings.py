@@ -33,7 +33,7 @@ current_block = {
     "count_block_screen": 0,
 }
 
-figurs = []
+figurs = {}
 window_size = (W, H)
 # num_block = 7
 
