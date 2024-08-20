@@ -13,7 +13,7 @@ class Tetris:
         self.screen_class = Screen()
         self.screen = self.screen_class.screen_game()
         self.blocks = Blocks(self.screen_class)
-        self.move_blocks = MoveBlocks()
+        self.move_blocks = MoveBlocks(self.blocks)
         self.x_start_area = settings.x_start_area
         self.x_end_area = settings.x_end_area
         self.y_start_area = settings.y_start_area
@@ -30,7 +30,8 @@ class Tetris:
         self.screen_class.handle_state_data()
 
         self.USEREVENT = pygame.USEREVENT
-        pygame.time.set_timer(self.USEREVENT, 500)
+        self.delay_time = 300
+        pygame.time.set_timer(self.USEREVENT, self.delay_time)
 
         self.w_cell = settings.w_cell
         self.h_cell = settings.h_cell
@@ -39,11 +40,8 @@ class Tetris:
 
         self.clock = pygame.time.Clock()
 
-        # self.current_block["num"] = random.randrange(1, 8)
-        self.num_next_block = random.randrange(1, 8)
-
-        # self.current_block["num"] = 1
         self.current_block["num"] = random.randrange(1, 8)
+        self.num_next_block = settings.num_next_block
 
         self.set_coord_x_area()
 
@@ -73,10 +71,11 @@ class Tetris:
                 # таймер
                 if event.type == self.USEREVENT and not bool(self.key_button):
                     # отрисовка квадратов
-                    self.blocks.draw_figurs(self.num_next_block)
+                    # self.blocks.draw_figurs(self.num_next_block)
+                    # print("j: ", self.num_next_block)
 
                     self.move_blocks.move_down_block(
-                        self.current_block, self.coords_blocks, self.num_next_block
+                        self.current_block, self.coords_blocks
                     )
 
                 if event.type == pygame.KEYDOWN:
@@ -171,12 +170,12 @@ class Tetris:
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT:
-                        pygame.time.set_timer(self.USEREVENT, 500)
+                        pygame.time.set_timer(self.USEREVENT, self.delay_time)
 
                         self.key_button = ""
 
                     if event.key == pygame.K_RIGHT:
-                        pygame.time.set_timer(self.USEREVENT, 500)
+                        pygame.time.set_timer(self.USEREVENT, self.delay_time)
 
                         self.key_button = ""
 

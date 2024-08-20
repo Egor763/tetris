@@ -1,4 +1,5 @@
 import pygame
+import random
 
 pygame.init()
 
@@ -16,7 +17,7 @@ x_end_area = 350
 x_next_block = 450
 y_next_block = 400
 
-num_next_block = 0
+num_next_block = random.randrange(1, 8)
 
 
 key_button = ""

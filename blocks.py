@@ -1,7 +1,6 @@
 import pygame
 
 import settings
-from move_blocks import MoveBlocks
 
 
 class Blocks:
@@ -9,8 +8,6 @@ class Blocks:
         pygame.init()
 
         self.screen_class = screen_class
-
-        self.move_blocks = MoveBlocks()
 
         self.screen = self.screen_class.screen_game()
 
