@@ -79,7 +79,7 @@ class Tetris:
                     )
 
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
+                    if event.key == pygame.K_q:
                         exit()
 
                     if event.key == pygame.K_KP5:
